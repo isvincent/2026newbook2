@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>115 新書開箱・書香市集 ｜ 楊梅高中圖書館</title>
+<style>
+:root{
+  --ink:#1f2440; --ink-soft:#5b6178; --paper:#fff9f2;
+  --line:rgba(31,36,64,.10);
+  --brand1:#ff7a59; --brand2:#ff3d8b; --brand3:#8b5cf6;
+  --card:#ffffff; --radius:20px;
+  --shadow:0 10px 30px rgba(31,36,64,.12);
+  --shadow-lg:0 24px 60px rgba(31,36,64,.22);
+  --fs-base:17px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-size:var(--fs-base); line-height:1.65; color:var(--ink);
+  font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC","Heiti TC","Segoe UI",system-ui,sans-serif;
+  background:
+    radial-gradient(1200px 600px at 12% -8%, #ffe3d0 0%, transparent 55%),
+    radial-gradient(1000px 560px at 100% 0%, #ffd9ec 0%, transparent 55%),
+    radial-gradient(1000px 700px at 50% 120%, #e6ddff 0%, transparent 55%),
+    var(--paper);
+  min-height:100vh;
+}
+.mono{font-family:"SFMono-Regular",Consolas,"Roboto Mono",monospace}
+a{color:inherit}
+button{font-family:inherit; cursor:pointer}
+::selection{background:#ffd0a8}
+
+/* ---------- Top bar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:40;
+  display:flex; align-items:center; gap:14px;
+  padding:12px clamp(14px,4vw,42px);
+  background:rgba(255,249,242,.82); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex; align-items:center; gap:11px; font-weight:900; font-size:1.15rem; letter-spacing:.5px}
+.brand .logo{
+  width:42px; height:42px; border-radius:13px; display:grid; place-items:center; font-size:1.4rem;
+  background:linear-gradient(135deg,var(--brand1),var(--brand2)); box-shadow:0 6px 16px rgba(255,61,139,.4);
+  transform:rotate(-6deg);
+}
+.brand small{display:block; font-size:.62rem; font-weight:700; color:var(--ink-soft); letter-spacing:2px}
+.topbar .spacer{flex:1}
+.iconbtn{
+  border:1px solid var(--line); background:#fff; border-radius:999px;
+  padding:9px 16px; font-weight:800; font-size:.92rem; color:var(--ink);
+  display:inline-flex; align-items:center; gap:8px; transition:transform .15s, box-shadow .15s;
+}
+.iconbtn:hover{transform:translateY(-2px); box-shadow:var(--shadow)}
+.iconbtn .badge{background:var(--brand2); color:#fff; border-radius:999px; min-width:22px; height:22px; padding:0 6px;
+  display:grid; place-items:center; font-size:.78rem; font-weight:900}
+
+/* ---------- Hero ---------- */
+.hero{position:relative; overflow:hidden; padding:clamp(34px,7vw,72px) clamp(16px,5vw,48px) clamp(20px,4vw,40px)}
+.hero-inner{max-width:1180px; margin:0 auto; position:relative; z-index:2}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:9px; font-weight:900; letter-spacing:1px;
+  background:#fff; border:2px solid #ffd7a8; color:#e8590c; padding:7px 16px; border-radius:999px; font-size:.9rem;
+  box-shadow:0 6px 18px rgba(232,89,12,.15);
+}
+.hero h1{
+  font-size:clamp(2.3rem,6.5vw,4.4rem); line-height:1.05; margin:.35em 0 .2em; font-weight:900; letter-spacing:-1px;
+}
+.hero h1 .grad{
+  background:linear-gradient(100deg,var(--brand1),var(--brand2) 45%,var(--brand3));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero p.lead{font-size:clamp(1.05rem,2.2vw,1.35rem); color:var(--ink-soft); max-width:640px; font-weight:600}
+.stats{display:flex; flex-wrap:wrap; gap:14px; margin-top:26px}
+.stat{
+  background:var(--card); border-radius:16px; padding:14px 20px; box-shadow:var(--shadow);
+  border:1px solid var(--line); min-width:118px;
+}
+.stat b{display:block; font-size:1.9rem; font-weight:900; line-height:1;
+  background:linear-gradient(120deg,var(--brand1),var(--brand2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+.stat span{font-size:.86rem; color:var(--ink-soft); font-weight:700}
+/* floating deco books */
+.float{position:absolute; z-index:1; border-radius:6px 10px 10px 6px; opacity:.9;
+  box-shadow:0 12px 26px rgba(31,36,64,.18); animation:bob 6s ease-in-out infinite}
+.float::before{content:""; position:absolute; left:0; top:0; bottom:0; width:8px; border-radius:6px 0 0 6px; background:rgba(0,0,0,.18)}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(var(--r))}50%{transform:translateY(-18px) rotate(var(--r))}}
+@media (max-width:820px){.float{display:none}}
+
+/* ---------- Controls ---------- */
+.wrap{max-width:1180px; margin:0 auto; padding:0 clamp(14px,4vw,42px)}
+.panel{
+  background:rgba(255,255,255,.72); backdrop-filter:blur(8px);
+  border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:18px clamp(16px,3vw,26px); margin-top:8px;
+}
+.searchrow{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+.search{position:relative; flex:1; min-width:240px}
+.search input{
+  width:100%; font-size:1.08rem; font-weight:600; padding:14px 18px 14px 48px; border-radius:14px;
+  border:2px solid var(--line); background:#fff; color:var(--ink); outline:none; transition:border-color .15s, box-shadow .15s;
+}
+.search input:focus{border-color:var(--brand2); box-shadow:0 0 0 4px rgba(255,61,139,.14)}
+.search .mag{position:absolute; left:16px; top:50%; transform:translateY(-50%); font-size:1.2rem; opacity:.6}
+.search .clear{position:absolute; right:10px; top:50%; transform:translateY(-50%); border:none; background:#f1eef7;
+  border-radius:999px; width:30px; height:30px; font-size:1rem; display:none; place-items:center}
+.select{
+  font-size:1rem; font-weight:800; padding:13px 16px; border-radius:14px; border:2px solid var(--line);
+  background:#fff; color:var(--ink); outline:none;
+}
+.btn-random{
+  border:none; color:#fff; font-weight:900; font-size:1rem; padding:14px 22px; border-radius:14px;
+  background:linear-gradient(120deg,var(--brand1),var(--brand2)); box-shadow:0 8px 22px rgba(255,61,139,.35);
+  transition:transform .15s, box-shadow .15s;
+}
+.btn-random:hover{transform:translateY(-2px) scale(1.02); box-shadow:0 12px 30px rgba(255,61,139,.45)}
+.btn-random:active{transform:scale(.97)}
+
+.chips{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+.chip{
+  border:2px solid transparent; background:#fff; color:var(--ink); font-weight:800; font-size:.95rem;
+  padding:9px 15px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;
+  box-shadow:0 3px 10px rgba(31,36,64,.06); transition:transform .12s, box-shadow .12s, background .12s;
+}
+.chip:hover{transform:translateY(-2px)}
+.chip .dot{width:12px; height:12px; border-radius:50%}
+.chip .n{font-size:.78rem; font-weight:900; opacity:.75; background:rgba(0,0,0,.06); padding:1px 8px; border-radius:999px}
+.chip.on{color:#fff; box-shadow:var(--shadow)}
+
+/* ---------- Distribution bars ---------- */
+.dist{margin-top:16px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px}
+.dbar{background:#fff; border:1px solid var(--line); border-radius:14px; padding:11px 13px; cursor:pointer; transition:transform .12s, box-shadow .12s}
+.dbar:hover{transform:translateY(-3px); box-shadow:var(--shadow)}
+.dbar .top{display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:.9rem; margin-bottom:7px}
+.dbar .top .cnt{font-weight:900}
+.dbar .track{height:9px; border-radius:999px; background:#eee9f2; overflow:hidden}
+.dbar .fill{height:100%; border-radius:999px; width:0; transition:width 1s cubic-bezier(.2,.8,.2,1)}
+
+/* ---------- Result meta ---------- */
+.meta{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin:26px 0 14px}
+.meta .count{font-weight:900; font-size:1.15rem}
+.meta .count em{font-style:normal; color:var(--brand2); font-size:1.4rem}
+.tag-active{display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid var(--line);
+  border-radius:999px; padding:5px 12px; font-weight:800; font-size:.85rem}
+.tag-active button{border:none; background:none; font-size:1rem; line-height:1; color:var(--ink-soft)}
+
+/* ---------- Grid & Book cards ---------- */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:20px; padding-bottom:40px}
+.book{
+  background:var(--card); border-radius:16px; overflow:hidden; box-shadow:var(--shadow);
+  border:1px solid var(--line); cursor:pointer; display:flex; flex-direction:column;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s;
+  animation:pop .4s backwards;
+}
+@keyframes pop{from{opacity:0; transform:translateY(14px) scale(.97)}to{opacity:1}}
+.book:hover{transform:translateY(-8px) rotate(-.6deg); box-shadow:var(--shadow-lg)}
+.book:focus-visible{outline:3px solid var(--brand2); outline-offset:3px}
+.cover{
+  position:relative; padding:20px 18px 18px 24px; min-height:158px; display:flex; flex-direction:column; justify-content:space-between;
+  color:#fff;
+}
+.cover::before{content:""; position:absolute; left:0; top:0; bottom:0; width:9px; background:rgba(0,0,0,.22)}
+.cover .cat{font-size:.8rem; font-weight:900; letter-spacing:.5px; display:inline-flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,.22); padding:4px 11px; border-radius:999px; align-self:flex-start; backdrop-filter:blur(2px)}
+.cover .ct{font-size:1.16rem; line-height:1.35; font-weight:900; margin-top:12px;
+  text-shadow:0 2px 8px rgba(0,0,0,.28);
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden}
+.newbadge{position:absolute; top:12px; right:12px; background:#fff; color:#e8590c; font-weight:900; font-size:.72rem;
+  padding:4px 9px; border-radius:999px; box-shadow:0 4px 10px rgba(0,0,0,.2); transform:rotate(6deg)}
+.info{padding:13px 16px 15px; display:flex; flex-direction:column; gap:5px}
+.info .au{font-weight:800; font-size:.95rem; color:var(--ink)}
+.info .pb{font-size:.85rem; color:var(--ink-soft); font-weight:600}
+.info .foot{display:flex; justify-content:space-between; align-items:center; margin-top:4px}
+.info .yr{font-weight:900; font-size:.85rem; color:var(--brand2)}
+.info .rn{font-size:.72rem; color:#9aa0b5}
+.fav-mini{border:none; background:#f4f0fa; border-radius:999px; width:34px; height:34px; font-size:1rem; display:grid; place-items:center;
+  transition:transform .12s, background .12s}
+.fav-mini:hover{transform:scale(1.15)}
+.fav-mini.on{background:#ffe1ee}
+
+.empty{grid-column:1/-1; text-align:center; padding:70px 20px; color:var(--ink-soft)}
+.empty .big{font-size:3rem}
+.empty h3{font-size:1.4rem; margin:.4em 0 .2em; color:var(--ink)}
+
+/* ---------- Modal ---------- */
+.overlay{
+  position:fixed; inset:0; z-index:60; background:rgba(31,36,64,.55); backdrop-filter:blur(6px);
+  display:none; align-items:center; justify-content:center; padding:20px; opacity:0; transition:opacity .2s;
+}
+.overlay.show{display:flex; opacity:1}
+.modal{
+  background:#fff; border-radius:26px; max-width:640px; width:100%; max-height:90vh; overflow:auto;
+  box-shadow:var(--shadow-lg); transform:scale(.9) translateY(10px); transition:transform .25s cubic-bezier(.2,.9,.3,1.2);
+}
+.overlay.show .modal{transform:scale(1) translateY(0)}
+.m-cover{position:relative; padding:34px 34px 28px; color:#fff}
+.m-cover .cat{font-size:.9rem; font-weight:900; background:rgba(255,255,255,.22); padding:6px 14px; border-radius:999px;
+  display:inline-flex; gap:7px; align-items:center; backdrop-filter:blur(2px)}
+.m-cover h2{font-size:clamp(1.5rem,4vw,2rem); line-height:1.3; margin:16px 0 6px; font-weight:900; text-shadow:0 2px 10px rgba(0,0,0,.25)}
+.m-cover .m-au{font-weight:800; font-size:1.1rem; opacity:.96}
+.m-close{position:absolute; top:16px; right:16px; border:none; background:rgba(255,255,255,.9); color:var(--ink);
+  width:42px; height:42px; border-radius:50%; font-size:1.3rem; font-weight:900; display:grid; place-items:center;
+  transition:transform .15s}
+.m-close:hover{transform:rotate(90deg) scale(1.08)}
+.m-body{padding:24px 30px 30px}
+.fields{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.field{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:13px 16px}
+.field.full{grid-column:1/-1}
+.field label{display:block; font-size:.78rem; font-weight:900; color:var(--ink-soft); letter-spacing:1px; margin-bottom:3px}
+.field .v{font-size:1.08rem; font-weight:800; word-break:break-all}
+.m-actions{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+.m-actions button{flex:1; min-width:150px; border:none; border-radius:14px; padding:15px; font-weight:900; font-size:1rem;
+  transition:transform .15s, box-shadow .15s}
+.m-actions button:hover{transform:translateY(-2px)}
+.btn-fav{background:#fff0f6; color:#c2185b; border:2px solid #ffc4de !important}
+.btn-fav.on{background:linear-gradient(120deg,var(--brand1),var(--brand2)); color:#fff; border-color:transparent !important}
+.btn-nav{background:#f1eef8; color:var(--ink)}
+
+/* ---------- Toast ---------- */
+.toast{position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(30px);
+  background:var(--ink); color:#fff; padding:13px 24px; border-radius:14px; font-weight:800; z-index:80;
+  opacity:0; transition:transform .3s, opacity .3s; box-shadow:var(--shadow-lg); pointer-events:none; max-width:90vw}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+/* ---------- Back to top ---------- */
+.totop{position:fixed; right:20px; bottom:24px; z-index:50; width:52px; height:52px; border-radius:50%; border:none;
+  background:linear-gradient(135deg,var(--brand1),var(--brand2)); color:#fff; font-size:1.4rem; box-shadow:var(--shadow-lg);
+  opacity:0; pointer-events:none; transition:opacity .25s, transform .25s}
+.totop.show{opacity:1; pointer-events:auto}
+.totop:hover{transform:translateY(-4px)}
+
+footer{text-align:center; padding:40px 20px 60px; color:var(--ink-soft); font-weight:600}
+footer b{color:var(--ink)}
+
+@media (max-width:560px){
+  :root{--fs-base:16px}
+  .fields{grid-template-columns:1fr}
+  .stat{flex:1; min-width:calc(50% - 7px)}
+  .brand small{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important; transition:none !important; scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">📚</div>
+    <div>楊梅高中圖書館<small>YMHS LIBRARY ・ 新書展</small></div>
+  </div>
+  <div class="spacer"></div>
+  <button class="iconbtn" id="favBtn" title="我的書單">💛 我的書單 <span class="badge" id="favCount">0</span></button>
+  <button class="iconbtn" id="soundBtn" title="開關音效">🔊</button>
+</div>
+
+<header class="hero">
+  <div class="float" style="--r:8deg; width:78px; height:104px; right:8%; top:14%; background:linear-gradient(140deg,#ec4899,#be185d); animation-delay:0s"></div>
+  <div class="float" style="--r:-10deg; width:66px; height:90px; right:20%; top:44%; background:linear-gradient(140deg,#14b8a6,#0f766e); animation-delay:1.1s"></div>
+  <div class="float" style="--r:6deg; width:72px; height:96px; right:3%; top:52%; background:linear-gradient(140deg,#8b5cf6,#6d28d9); animation-delay:2s"></div>
+  <div class="float" style="--r:-6deg; width:60px; height:82px; right:26%; top:10%; background:linear-gradient(140deg,#f59e0b,#d97706); animation-delay:.6s"></div>
+  <div class="float" style="--r:12deg; width:70px; height:94px; right:32%; top:62%; background:linear-gradient(140deg,#3b82f6,#1d4ed8); animation-delay:1.6s"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">✨ 115 學年度・新書開箱</span>
+    <h1>翻開新書，<br><span class="grad">遇見下一個喜歡的故事</span></h1>
+    <p class="lead">全館新到館藏一次看！搜尋、分類瀏覽、隨機抽書，把想讀的書加進你的書單。</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="panel">
+    <div class="searchrow">
+      <div class="search">
+        <span class="mag">🔍</span>
+        <input id="q" type="search" placeholder="搜尋書名、作者、出版社、ISBN 或登錄號…" autocomplete="off">
+        <button class="clear" id="clearQ" title="清除">✕</button>
+      </div>
+      <select class="select" id="yearSel"><option value="">全部年份</option></select>
+      <select class="select" id="sortSel">
+        <option value="id">登錄號排序</option>
+        <option value="ynew">出版年（新→舊）</option>
+        <option value="yold">出版年（舊→新）</option>
+        <option value="title">書名筆順</option>
+      </select>
+      <button class="btn-random" id="randomBtn">🎲 隨機推薦一本</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="dist" id="dist"></div>
+  </section>
+
+  <div class="meta">
+    <div class="count">共 <em id="resCount">0</em> 本書</div>
+    <div id="activeTags"></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  <b>楊梅高中圖書館</b> ・ 115 學年度新書展 ｜ 共 <span id="totalFoot">0</span> 本新書<br>
+  點一本書看看它的故事吧！📖
+</footer>
+
+<button class="totop" id="toTop" title="回到頂端">↑</button>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const BOOKS = [{"id": "055221", "isbn": "9789863365235", "title": "波波露露 越南河內+近郊深度遊:附下龍灣.陸龍灣 梅州鄉野 普隆祕境 沙壩梯田", "cls": "738.39", "author": "波波露露", "pub": "太雅", "year": "2024", "m": "7"}, {"id": "055222", "isbn": "9789863365440", "title": "開始在泰國自助旅行", "cls": "738.29", "author": "吳靜雯", "pub": "太雅", "year": "2025", "m": "7"}, {"id": "055223", "isbn": "9786264201803", "title": "全世界最簡單!細胞圖鑑", "cls": "364", "author": "鈴川茂", "pub": "晨星", "year": "2025", "m": "3"}, {"id": "055224", "isbn": "9789863128649", "title": "Canva實用點子爆米花", "cls": "312.837", "author": "孫立德", "pub": "旗標", "year": "2026", "m": "3"}, {"id": "055225", "isbn": "9786264202183", "title": "超危險生物求生圖鑑", "cls": "385.9", "author": "小宮輝之", "pub": "晨星", "year": "2025", "m": "3"}, {"id": "055226", "isbn": "9786263585959", "title": "世界盡頭的咖啡館:這一生, 我為何而存在?", "cls": "191.9", "author": "史崔勒基", "pub": "三采文化", "year": "2026", "m": "1"}, {"id": "055227", "isbn": "9789864509058", "title": "大海:邊界之外,港口之內", "cls": "863.51", "author": "汪啟疆", "pub": "九歌", "year": "2026", "m": "8"}, {"id": "055228", "isbn": "9786263383760", "title": "那些與初戀有關的祕密", "cls": "874.57", "author": "薩恩斯", "pub": "尖端", "year": "2022", "m": "8"}, {"id": "055229", "isbn": "9789862944073", "title": "世界的台灣史:從福爾摩沙到 AI 產業中心, 綜覽台灣人走過的世界路", "cls": "733.21", "author": "林呈蓉", "pub": "玉山社", "year": "2024", "m": "7"}, {"id": "055230", "isbn": "9786263561779", "title": "那些與熱戀有關的祕密", "cls": "874.57", "author": "薩恩斯", "pub": "尖端", "year": "2023", "m": "8"}, {"id": "055231", "isbn": "9789861367378", "title": "被財神爺喜歡到怕的方法:淨化金毒、史上最簡單的開運增財術", "cls": "561.014", "author": "Masa", "pub": "如何", "year": "2026", "m": "5"}, {"id": "055232", "isbn": "9789861345017", "title": "利與贏:劉必榮談判實戰課", "cls": "177.4", "author": "劉必榮", "pub": "先覺", "year": "2024", "m": "1"}, {"id": "055233", "isbn": "9789862626467", "title": "60歲,還是想一個人去日本Long Stay:老青春背包客的樂活遊學日誌", "cls": "731.9", "author": "吳典宜", "pub": "貓頭鷹", "year": "2023", "m": "7"}, {"id": "055234", "isbn": "9786267813102", "title": "三部曲", "cls": "881.457", "author": "佛瑟", "pub": "麥田", "year": "2026", "m": "8"}, {"id": "055235", "isbn": "9789861755496", "title": "養氣:神隱中醫15年親身實證的幸福功法", "cls": "413.94", "author": "高堯楷", "pub": "方智", "year": "2025", "m": "4"}, {"id": "055236", "isbn": "9789576587122", "title": "設限, 才有好關係:不築牆也不揮霍善良, 斷絕累到厭世的偽關係", "cls": "177.2", "author": "塔瓦布", "pub": "三采文化", "year": "2022", "m": "1"}, {"id": "055237", "isbn": "9789865408565", "title": "時間的秩序:用最尖端物理學,顛覆常識與直覺,探索時間的本質", "cls": "168.2", "author": "羅維理", "pub": "世茂", "year": "2026", "m": "1"}, {"id": "055238", "isbn": "9789862943847", "title": "台灣使用指南", "cls": "733.21", "author": "施益堅", "pub": "玉山社", "year": "2024", "m": "7"}, {"id": "055239", "isbn": "9789865566968", "title": "小雞過生日", "cls": "861.599", "author": "工藤紀子", "pub": "小魯文化", "year": "2026", "m": "8"}, {"id": "055240", "isbn": "9786267043097", "title": "小雞到外婆家", "cls": "861.59", "author": "工藤紀子", "pub": "小魯文化", "year": "2026", "m": "8"}, {"id": "055241", "isbn": "9789865566951", "title": "小雞逛遊樂園", "cls": "861.599", "author": "工藤紀子", "pub": "小魯文化", "year": "2026", "m": "8"}, {"id": "055242", "isbn": "9786267043073", "title": "小雞逛超市", "cls": "861.599", "author": "工藤紀子", "pub": "小魯文化", "year": "2026", "m": "8"}, {"id": "055243", "isbn": "9786267207420", "title": "讓阿育吠陀重啟消化力:通暢淋巴系統.完全消化麩質和乳製品", "cls": "411.3", "author": "杜亞爾", "pub": "健行文化", "year": "2023", "m": "4"}, {"id": "055244", "isbn": "9789861365145", "title": "蔡康永的情商課:為你自己活一次", "cls": "176.5", "author": "蔡康永", "pub": "如何", "year": "2018", "m": "1"}, {"id": "055245", "isbn": "9789861799261", "title": "文青櫃姐聊天室:那些失去與懸念的故事", "cls": "863.55", "author": "鍾文音", "pub": "大田", "year": "2025", "m": "8"}, {"id": "055247", "isbn": "9789869407632", "title": "都市傳說.第二部.1:廁所裡的花子", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055248", "isbn": "9789869449915", "title": "都市傳說.第二部.2:被註咒的廣告", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055249", "isbn": "9789869500753", "title": "都市傳說.第二部.3:幽靈船", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055250", "isbn": "9789869590211", "title": "都市傳說.第二部.4:外送", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055251", "isbn": "9789869631808", "title": "都市傳說 第二部 5:收藏家", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055252", "isbn": "9789869631884", "title": "都市傳說 第二部.6:你是誰", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055253", "isbn": "9789869683326", "title": "都市傳說.第二部.7:撿到的SD卡", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055254", "isbn": "9789869683364", "title": "都市傳說.第二部.8:人面魚", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055255", "isbn": "9789869762830", "title": "都市傳說.第二部.9:菊人形", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055256", "isbn": "9789869794466", "title": "都市傳說.第二部.10:瘦長人", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055257", "isbn": "9789869794497", "title": "都市傳說.第二部.11:八尺大人", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055258", "isbn": "9789869865883", "title": "都市傳說.第二部.12:禁后", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055259", "isbn": "9789869563413", "title": "都市傳說 特典:詭屋", "cls": "857.7", "author": "笭菁", "pub": "奇幻基地", "year": "2025", "m": "8"}, {"id": "055260", "isbn": "9786267650028", "title": "你的人生, 他們六個說了算!:決定你一生的六種物質", "cls": "399.54", "author": "菲利浦斯", "pub": "平安文化", "year": "2026", "m": "3"}, {"id": "055261", "isbn": "9786269989317", "title": "跨國灰姑娘:當東南亞幫傭遇上臺灣新富家庭", "cls": "556.56", "author": "藍佩嘉", "pub": "鏡好讀", "year": "2026", "m": "5"}, {"id": "055262", "isbn": "9789577519573", "title": "我愛黑桃7.1.撲克牌家族的祕密", "cls": "863.596", "author": "亞平", "pub": "國語日報社", "year": "2025", "m": "8"}, {"id": "055263", "isbn": "9786267394823", "title": "中年之路:穿越幽暗,迎向完整的內在鍊金之旅", "cls": "170.181", "author": "霍利斯", "pub": "楓樹林", "year": "2024", "m": "1"}, {"id": "055264", "isbn": "9786267739037", "title": "蕉葉與樹的約定", "cls": "863.8573", "author": "那瓜", "pub": "鏡文學", "year": "2026", "m": "8"}, {"id": "055265", "isbn": "9786263294134", "title": "超圖解英國史:從政經外交到藝術文化, 全方位了解大不列顛兩千年", "cls": "741.1", "author": "島崎晉", "pub": "臺灣東販", "year": "2025", "m": "7"}, {"id": "055266", "isbn": "9786263155008", "title": "黃色臉孔", "cls": "874.57", "author": "匡靈秀", "pub": "臉譜", "year": "2026", "m": "8"}, {"id": "055267", "isbn": "9789864072354", "title": "讓74億人都驚呆的英文字首、字根、字尾心智地圖", "cls": "805.12", "author": "懶鬼子英日語編輯群", "pub": "懶鬼子英日語", "year": "2025", "m": "8"}, {"id": "055268", "isbn": "9789864072668", "title": "讓74億人都驚呆的英文文法心智地圖", "cls": "805.16", "author": "吳宜錚", "pub": "易富文化", "year": "2025", "m": "8"}, {"id": "055269", "isbn": "9786269778768", "title": "橋頭樓上", "cls": "857.7", "author": "Priest", "pub": "一豆文化", "year": "2024", "m": "8"}, {"id": "055270", "isbn": "9786263980525", "title": "越南", "cls": "738.39", "author": "地球の步き方編集室", "pub": "墨刻", "year": "2024", "m": "7"}, {"id": "055271", "isbn": "9786267721209", "title": "史賓諾莎診療室", "cls": "861.57", "author": "夏川草介", "pub": "悅知文化", "year": "2026", "m": "8"}, {"id": "055272", "isbn": "9789579232876", "title": "醫學傳心錄", "cls": "413.2", "author": "無名氏", "pub": "文光圖書", "year": "2015", "m": "4"}, {"id": "055273", "isbn": "9786263797420", "title": "地中海慢旅人:走入葡.西.義.法與摩納哥,品味千年交織的古老風情與迷人海岸", "cls": "740.9", "author": "克萊妮", "pub": "台灣東方", "year": "2025", "m": "7"}, {"id": "055274", "isbn": "9786269917488", "title": "長女病:我們不是天生愛扛責任, 台灣跨世代女兒的故事", "cls": "544.14", "author": "張慧慈", "pub": "游擊文化", "year": "2025", "m": "5"}, {"id": "055275", "isbn": "9789861898094", "title": "今天的點心:3D鏡面繪本", "cls": "861.59", "author": "渡邊千夏", "pub": "格林文化", "year": "2026", "m": "8"}, {"id": "055276", "isbn": "9789863128489", "title": "超有料 Plus!職場第一實用的 AI 工作術", "cls": "312.835", "author": "施威銘研究室", "pub": "旗標科技", "year": "2026", "m": "3"}, {"id": "055277", "isbn": "9789865077471", "title": "小學生STEAM廚房科學創客教室:5大主題X50款料理 成為廚房裡的小小科學家", "cls": "303.4", "author": "霍爾", "pub": "采實文化", "year": "2022", "m": "3"}, {"id": "055278", "isbn": "9786263905283", "title": "生命的催化劑RNA:諾貝爾化學獎得主破解生命最深沉謎題的探索之旅", "cls": "364.217", "author": "切克", "pub": "商周", "year": "2025", "m": "3"}, {"id": "055279", "isbn": "9786263107557", "title": "各種悲傷:失眠.幽閉恐懼.家有膽小狗......瑣碎到難以啟齒的小困擾與小怪僻", "cls": "875.4", "author": "萊基", "pub": "麥田", "year": "2024", "m": "8"}, {"id": "055280", "isbn": "9786263106253", "title": "遠野物語remix", "cls": "861.58", "author": "柳田國男", "pub": "麥田", "year": "2024", "m": "8"}, {"id": "055281", "isbn": "9789577519238", "title": "數位教養課:打造滑世代的新親子關係", "cls": "528.2", "author": "劉容襄", "pub": "國語日報社", "year": "2024", "m": "5"}, {"id": "055282", "isbn": "9786263156067", "title": "暗夜閱覽室", "cls": "874.57", "author": "席姆斯", "pub": "臉譜", "year": "2025", "m": "8"}, {"id": "055283", "isbn": "9786267195178", "title": "多巴胺國度:在縱慾年代找到身心平衡", "cls": "411.8", "author": "蘭布克", "pub": "經濟新潮社", "year": "2025", "m": "4"}, {"id": "055284", "isbn": "9789577419064", "title": "藥師謀殺案", "cls": "874.57", "author": "佩納", "pub": "春天國際文化", "year": "2025", "m": "8"}, {"id": "055285", "isbn": "9786263106659", "title": "神經可塑性:用神經科學突破行為模式迴圈，終結焦慮、恐慌和憂鬱，實現最佳的心理健康", "cls": "172.1", "author": "維諾拉", "pub": "麥田", "year": "2026", "m": "1"}, {"id": "055286", "isbn": "9786263156593", "title": "我, 為什麼會這樣?:喜歡這些, 討厭那些, 從生物學、腦科學與心理學解釋我們的喜好、情緒、行為與想法, 重啟一趟人類的認識之旅", "cls": "363.81", "author": "蘇利文", "pub": "臉譜", "year": "2026", "m": "3"}, {"id": "055287", "isbn": "9789863708018", "title": "從無力到穩定! 芭蕾舞者的肌肉鍛鍊術", "cls": "976.03", "author": "島田智史", "pub": "楓葉社文化", "year": "2025", "m": "9"}, {"id": "055288", "isbn": "9786264371254", "title": "苔蘚圖鑑:微觀探索迷你綠世界！", "cls": "378.2025", "author": "古木達郎", "pub": "台灣東方", "year": "2025", "m": "3"}, {"id": "055289", "isbn": "9786267609392", "title": "之碑.上冊", "cls": "861.57", "author": "京極夏彥", "pub": "獨步文化", "year": "2025", "m": "8"}, {"id": "055290", "isbn": "9786267609408", "title": "之碑", "cls": "861.57", "author": "京極夏彥", "pub": "獨步文化", "year": "2025", "m": "8"}, {"id": "055291", "isbn": "9786269510511", "title": "疫情釀的酒", "cls": "863.55", "author": "beat", "pub": "書粥工作室", "year": "2026", "m": "8"}, {"id": "055292", "isbn": "9789863707905", "title": "從僵硬到優雅!芭蕾舞者的自我調整術", "cls": "976.03", "author": "島田智史", "pub": "楓葉社文化", "year": "2025", "m": "9"}, {"id": "055293", "isbn": "9786267721995", "title": "別對每件事都有反應", "cls": "191.9", "author": "枡野俊明", "pub": "悅知文化", "year": "2026", "m": "1"}, {"id": "055294", "isbn": "9786269254781", "title": "多益文法口袋教練", "cls": "805.1895", "author": "埃利奧特", "pub": "字覺文化", "year": "2026", "m": "8"}, {"id": "055295", "isbn": "9786267659526", "title": "我也有ADHD、ASD的發展障礙?:「做不好」也會變輕鬆", "cls": "415.988", "author": "司馬理英子", "pub": "健行文化", "year": "2026", "m": "4"}, {"id": "055296", "isbn": "9786269786305", "title": "中國是怎麼形成的:大歷史的速寫", "cls": "610", "author": "杜正勝", "pub": "一卷文化", "year": "2024", "m": "6"}, {"id": "055297", "isbn": "9789869202176", "title": "進烤箱的好日子", "cls": "863.57", "author": "李佳穎", "pub": "自轉星球", "year": "2026", "m": "8"}, {"id": "055298", "isbn": "9789573340393", "title": "在夜空中綻放星星", "cls": "861.57", "author": "窪美澄", "pub": "皇冠", "year": "2023", "m": "8"}, {"id": "055299", "isbn": "9786264311076", "title": "麵包小偷.6.麵包小偷和蘋果假面超人", "cls": "861.599", "author": "柴田啟子", "pub": "采實文化", "year": "2026", "m": "8"}, {"id": "055300", "isbn": "9789862623725", "title": "哥倫布大交換:1492年以後的生物影響和文化衝擊", "cls": "412.8", "author": "克羅斯比", "pub": "貓頭鷹", "year": "2024", "m": "4"}, {"id": "055301", "isbn": "9786263589001", "title": "地緣風險理財課:從保值到增值的全方位指南", "cls": "563", "author": "劉玉皙", "pub": "三采文化", "year": "2026", "m": "5"}, {"id": "055302", "isbn": "9786267415290", "title": "鬼談百景", "cls": "861.57", "author": "小野不由美", "pub": "獨步文化", "year": "2025", "m": "8"}, {"id": "055303", "isbn": "9786267747278", "title": "鯨", "cls": "862.57", "author": "千明官", "pub": "馬可孛羅", "year": "2026", "m": "8"}, {"id": "055304", "isbn": "9789576582011", "title": "跑跑薑餅人城市大逃亡.1.倫敦", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "8"}, {"id": "055305", "isbn": "9789576582325", "title": "跑跑薑餅人城市大逃亡.2:北京", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "8"}, {"id": "055306", "isbn": "9789576582837", "title": "跑跑薑餅人城市大逃亡.3:巴黎", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2023", "m": "8"}, {"id": "055307", "isbn": "9789576583391", "title": "跑跑薑餅人城市大逃亡.4:紐約", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "8"}, {"id": "055308", "isbn": "9789576583797", "title": "跑跑薑餅人城市大逃亡.5:羅馬", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "8"}, {"id": "055309", "isbn": "9789576584268", "title": "跑跑薑餅人城市大逃亡.6:雅典", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "8"}, {"id": "055310", "isbn": "9789576584763", "title": "跑跑薑餅人城市大逃亡.7:維也納", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "8"}, {"id": "055311", "isbn": "9789576585388", "title": "跑跑薑餅人城市大逃亡.8:華盛頓特區", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2023", "m": "8"}, {"id": "055312", "isbn": "9789576586002", "title": "跑跑薑餅人城市大逃亡.9:柏林", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2023", "m": "8"}, {"id": "055313", "isbn": "9789576586774", "title": "跑跑薑餅人城市大逃亡.10:馬德里", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2021", "m": "8"}, {"id": "055314", "isbn": "9789576587269", "title": "跑跑薑餅人城市大逃亡.11:布拉格", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2022", "m": "8"}, {"id": "055315", "isbn": "9789576588181", "title": "跑跑薑餅人城市大逃亡.12.阿姆斯特丹", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2022", "m": "8"}, {"id": "055316", "isbn": "9786263585225", "title": "跑跑薑餅人城市大逃亡.19:開羅(埃及)", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "8"}, {"id": "055317", "isbn": "9786264024693", "title": "雪中悍刀行. 第三部. 一:杯中起漣漪", "cls": "857.7", "author": "烽火戲諸侯", "pub": "高寶國際", "year": "2026", "m": "8"}, {"id": "055318", "isbn": "9789865060688", "title": "雪中悍刀行.第三部.2:轉戰三千里", "cls": "857.7", "author": "烽火戲諸侯", "pub": "高寶國際", "year": "2021", "m": "8"}, {"id": "055319", "isbn": "9789865060695", "title": "雪中悍刀行. 第三部.3:血染欽天監", "cls": "857.7", "author": "烽火戲諸侯", "pub": "高寶國際", "year": "2021", "m": "8"}, {"id": "055320", "isbn": "9789865060701", "title": "雪中悍刀行.第三部.4:.落子太安城", "cls": "857.7", "author": "烽火戲諸侯", "pub": "高寶國際", "year": "2021", "m": "8"}, {"id": "055321", "isbn": "9789865061333", "title": "雪中悍刀行.第三部.五.天下共逐鹿", "cls": "857.7", "author": "烽火戲諸侯", "pub": "高寶國際", "year": "2021", "m": "8"}, {"id": "055322", "isbn": "9786263586635", "title": "楓之谷大冒險.45:神殿的奴隸", "cls": "947.41", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "9"}, {"id": "055323", "isbn": "9786263587359", "title": "楓之谷大冒險.46:同步之眼", "cls": "947.41", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "9"}, {"id": "055324", "isbn": "9786263587779", "title": "楓之谷大冒險.47:闇黑龍王的反擊", "cls": "947.41", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "9"}, {"id": "055325", "isbn": "9786263588301", "title": "楓之谷大冒險.48:人偶族的祕密", "cls": "947.41", "author": "宋道樹", "pub": "三采文化", "year": "2026", "m": "9"}, {"id": "055326", "isbn": "9786263588967", "title": "楓之谷大冒險.49:智慧之眼覺醒", "cls": "947.41", "author": "宋道樹", "pub": "三采文化", "year": "2026", "m": "9"}, {"id": "055327", "isbn": "9786263584280", "title": "楓之谷數學神偷.24:命運的金鑰匙", "cls": "310", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "3"}, {"id": "055328", "isbn": "9786263585065", "title": "楓之谷數學神偷.25:骷髏王的賭局", "cls": "310", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "3"}, {"id": "055329", "isbn": "9786263585454", "title": "楓之谷數學神偷.26:閻羅王的審判", "cls": "310", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "3"}, {"id": "055330", "isbn": "9786263587601", "title": "楓之谷數學神偷.27:起死回生的祕密", "cls": "310", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "3"}, {"id": "055331", "isbn": "9786263588165", "title": "楓之谷數學神偷.28:暗黑公主降臨", "cls": "310", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "3"}, {"id": "055332", "isbn": "9786263588790", "title": "楓之谷數學神偷.29:死亡沙漠", "cls": "310", "author": "宋道樹", "pub": "三采文化", "year": "2026", "m": "3"}, {"id": "055333", "isbn": "4711528701114", "title": "極限返航", "cls": "874.57", "author": "威爾", "pub": "三采文化", "year": "2026", "m": "8"}, {"id": "055334", "isbn": "9789865027377", "title": "爆笑英語王.第1彈:用4格爆笑漫畫完記單字與句子", "cls": "805.12", "author": "辛", "pub": "碁峰資訊", "year": "2026", "m": "8"}, {"id": "055335", "isbn": "9786269622016", "title": "心轉,病自癒:五維一心的健康逆齡奇蹟", "cls": "411.1", "author": "蔡松彥", "pub": "原水文化", "year": "2026", "m": "4"}, {"id": "055336", "isbn": "9789864542284", "title": "新制多益全新!TOEIC單字大全", "cls": "805.1895", "author": "邱大衛", "pub": "國際學村", "year": "2026", "m": "8"}, {"id": "055337", "isbn": "9789864544479", "title": "多益TOEICPART 1-7 狠準單字:唯一解析各PART考點的解答之書!多益滿分紀錄保持者500次實戰經驗累積，助你快速解題考高分!", "cls": "805.1895", "author": "金大均", "pub": "國際學村", "year": "2025", "m": "8"}, {"id": "055338", "isbn": "9786267708330", "title": "生命簡史 起源:從宇宙微塵到原始細胞, 追尋生命起源與生物機制的真實脈絡", "cls": "361.5", "author": "朱欽士", "pub": "沐燁文化", "year": "2025", "m": "3"}, {"id": "055339", "isbn": "9786264198950", "title": "歷史豈止故事:歷史大學者幽默開講,抖出讓人驚嘆的歷史瞬間", "cls": "711", "author": "荷蘭德", "pub": "時報文化", "year": "2025", "m": "7"}, {"id": "055340", "isbn": "9789571393841", "title": "算癌症:運用大數據.五運六氣.易經八卦,治療癌症於發生之前!", "cls": "413.21", "author": "樓中亮", "pub": "時報文化", "year": "2021", "m": "4"}, {"id": "055341", "isbn": "9786263742567", "title": "我是一個媽媽, 我需要柏金包!:耶魯人類學家的曼哈頓上東區臥底觀察", "cls": "785.28", "author": "馬汀", "pub": "時報文化", "year": "2024", "m": "7"}, {"id": "055342", "isbn": "9786263618947", "title": "為什麼不找伊文斯?", "cls": "873.57", "author": "克莉絲蒂", "pub": "遠流", "year": "2024", "m": "8"}, {"id": "055343", "isbn": "9786264192651", "title": "怪城少女", "cls": "863.57", "author": "劉思坊", "pub": "時報文化", "year": "2025", "m": "8"}, {"id": "055344", "isbn": "9786264197038", "title": "有所交集的人", "cls": "861.57", "author": "白石一文", "pub": "時報文化", "year": "2026", "m": "8"}, {"id": "055345", "isbn": "9789571378527", "title": "槍炮、病菌與鋼鐵:人類社會的命運", "cls": "541.3", "author": "戴蒙", "pub": "時報文化", "year": "2026", "m": "5"}, {"id": "055346", "isbn": "9786264198585", "title": "顯影記", "cls": "863.55", "author": "李屏瑤", "pub": "時報文化", "year": "2026", "m": "8"}, {"id": "055347", "isbn": "9786263617186", "title": "香鬼", "cls": "863.57", "author": "古乃方", "pub": "遠流", "year": "2024", "m": "8"}, {"id": "055348", "isbn": "9786263965126", "title": "海邊的房間", "cls": "863.57", "author": "黃麗群", "pub": "時報文化", "year": "2026", "m": "8"}, {"id": "055349", "isbn": "9789575324544", "title": "新日檢決勝字彙:N1單語", "cls": "803.189", "author": "旺文社", "pub": "眾文圖書", "year": "2020", "m": "8"}, {"id": "055350", "isbn": "9786267414675", "title": "蔬食日常無國界:中式 日韓 南洋 歐美 美味多變吃不膩,打開純素新世界!", "cls": "427.31", "author": "林聖智", "pub": "日日幸福", "year": "2025", "m": "4"}, {"id": "055351", "isbn": "9786267752111", "title": "金剛經白話講座:放下的人生修行", "cls": "221.44", "author": "王思迅", "pub": "如果", "year": "2025", "m": "2"}, {"id": "055352", "isbn": "9786267782507", "title": "人屬的世界 骨骼、工具與遺址中的演化證據:下顎形狀、腦容量、直立姿勢、聚落痕跡......從尼安德塔人到現代人類的演變樣貌", "cls": "390 632", "author": "畢安祺", "pub": "機曜文化", "year": "2026", "m": "3"}, {"id": "055353", "isbn": "9786267045213", "title": "易經白話講座:64卦,卦卦讓你找到內在真實的力量", "cls": "121.12", "author": "王思迅", "pub": "如果", "year": "2022", "m": "1"}, {"id": "055354", "isbn": "9786269531202", "title": "登出鍵", "cls": "192.1", "author": "莫子", "pub": "紫焰", "year": "2026", "m": "1"}, {"id": "055355", "isbn": "9786264144926", "title": "業界專家親授AI Agent 實戰全攻:Low-Code × 真落地,從地端部署到 RAG 設計,打造不被取代的核心競爭力", "cls": "312.83", "author": "和誠", "pub": "博碩", "year": "2026", "m": "3"}, {"id": "055356", "isbn": "9789869288019", "title": "昨日的天空:從南北月交點洞悉前世,指引今生方向", "cls": "292.22", "author": "佛瑞斯特", "pub": "商周", "year": "2025", "m": "2"}, {"id": "055357", "isbn": "9786263184251", "title": "變幻的天空:從進化占星學探索行運與推運,創造自己的未來", "cls": "292.22", "author": "佛瑞斯特", "pub": "商周", "year": "2022", "m": "2"}, {"id": "055358", "isbn": "9786263183780", "title": "內在的天空:從星盤透析內在, 做出讓生命豐饒的明智抉擇", "cls": "292.22", "author": "佛瑞斯特", "pub": "商周", "year": "2025", "m": "2"}, {"id": "055359", "isbn": "9786267589496", "title": "4帳戶教你逆襲致富:從負債到資產千萬的系統理財法", "cls": "563", "author": "陳大仁", "pub": "今周刊", "year": "2025", "m": "5"}, {"id": "055360", "isbn": "9786269612130", "title": "槓桿ETF投資法:用50正2輕鬆打敗0050 & 0056, 提早退休", "cls": "563.5", "author": "林政華", "pub": "一心文化", "year": "2026", "m": "5"}, {"id": "055361", "isbn": "9786267488782", "title": "去東京自助旅行!給超新手的最強攻略全圖解:交通指南X打卡景點X食宿玩買, 有問必答萬用QA 2025-2026", "cls": "731.72609", "author": "Aska", "pub": "創意市集城邦文化", "year": "2025", "m": "7"}, {"id": "055362", "isbn": "9789869785945", "title": "歸零,遇見真實:一位行腳僧,1648個「向內朝聖」的日子", "cls": "226.965", "author": "詠給明就", "pub": "眾生文化", "year": "2026", "m": "2"}, {"id": "055363", "isbn": "9789860619492", "title": "100張圖幫股市小白財富自由:神準天王掏心回覆首投族提問", "cls": "563.53", "author": "方天龍", "pub": "台灣廣廈", "year": "2026", "m": "5"}, {"id": "055364", "isbn": "9789575327309", "title": "日文單字很有事:類義語相似卻不相同的關鍵", "cls": "803.12", "author": "王秋陽", "pub": "眾文圖書", "year": "2025", "m": "8"}, {"id": "055365", "isbn": "9786264144773", "title": "NotebookLM數位生產力:從資料整合到高效產出的知識工作術,打造你的AI思考特助", "cls": "312.83", "author": "許恆修", "pub": "博碩文化", "year": "2026", "m": "3"}, {"id": "055366", "isbn": "9786267336991", "title": "去沖繩自助旅行!這樣排行程超好玩:交通攻略 x 食宿玩買 x 打卡景點, 有問必答萬用QA", "cls": "731.7889", "author": "超級旅行貓", "pub": "創意市集", "year": "2025", "m": "7"}, {"id": "055367", "isbn": "9786267846209", "title": "讓細胞開心的料理:吃得對、吃得剛好、吃得讓身體舒服,就可減緩慢性發炎、代謝失衡、疲勞與老化", "cls": "427.1", "author": "羅勻吟", "pub": "創意市集", "year": "2026", "m": "4"}, {"id": "055368", "isbn": "9786267782385", "title": "探索微觀星球,顯微鏡下的植物世界:從單細胞到多細胞,從海洋到陸地......透過顯微鏡觀察,串起植物在地球上的生存路徑", "cls": "370", "author": "吳成軍", "pub": "機曜文化", "year": "2026", "m": "3"}, {"id": "055369", "isbn": "9786267782286", "title": "探索微觀星球,顯微鏡下的細胞世界:葉綠體x粒線體x細胞核......透過顯微鏡觀察,建立辨識細胞內構造與功能的基礎能力", "cls": "371.4", "author": "吳成軍", "pub": "機曜文化", "year": "2026", "m": "3"}, {"id": "055370", "isbn": "9786263980099", "title": "清邁攻略完全制霸", "cls": "738.29", "author": "趙思語", "pub": "墨刻", "year": "2024", "m": "7"}, {"id": "055371", "isbn": "9789864071708", "title": "讓74億人都驚呆的多益單字心智地圖", "cls": "805.1895", "author": "蔡", "pub": "懶鬼子英日語", "year": "2024", "m": "8"}, {"id": "055372", "isbn": "9789862899724", "title": "越南:河內.胡志明市.順化.會安", "cls": "738.39", "author": "墨刻編輯部", "pub": "墨刻", "year": "2024", "m": "7"}, {"id": "055373", "isbn": "9789864016426", "title": "獻給餐飲店的飲料客製技法:搭配顧客群與季節的軟性飲料調製技術與理論", "cls": "427.4", "author": "片倉康博", "pub": "瑞昇文化", "year": "2023", "m": "4"}, {"id": "055374", "isbn": "9786267554357", "title": "新制多益NEW TOEIC究極單字書", "cls": "805.1895", "author": "楊士璿", "pub": "東華書局", "year": "2026", "m": "8"}, {"id": "055375", "isbn": "9789863879039", "title": "我是你的菜", "cls": "982.582", "author": "馮翊綱", "pub": "INK印刻文學生活", "year": "2026", "m": "9"}, {"id": "055376", "isbn": "9786263807235", "title": "輕量級學測國寫", "cls": "524.313", "author": "白白老師", "pub": "千華數位", "year": "2024", "m": "5"}, {"id": "055377", "isbn": "9786269966936", "title": "抄高分作文:才能作文超高分", "cls": "524.313", "author": "呂緋", "pub": "我識社", "year": "2025", "m": "5"}, {"id": "055378", "isbn": "9786267782354", "title": "探索微觀星球 顯微鏡下的生活日常 : [澱粉粒 結晶體 微生物 透過顯微鏡觀察, 建立理解生活中常見物質的科學視角 / ]", "cls": "370", "author": "吳成軍", "pub": "機曜文化", "year": "2026", "m": "3"}, {"id": "055379", "isbn": "9789862984567", "title": "AI世代的表演之路:遇見角色也遇見真正的自己", "cls": "980", "author": "謝良欣", "pub": "揚智文化", "year": "2025", "m": "9"}, {"id": "055380", "isbn": "9789864072576", "title": "世界最強韓文文法", "cls": "803.26", "author": "金淑敬", "pub": "懶鬼子英日語", "year": "2025", "m": "8"}, {"id": "055381", "isbn": "9789864072545", "title": "世界最強韓語40音記憶口訣", "cls": "803.24", "author": "懶鬼子英日語編輯群", "pub": "懶鬼子英日語", "year": "2025", "m": "8"}, {"id": "055382", "isbn": "9789864481910", "title": "國文科取徑通優跨域國寫十八掌", "cls": "524.383", "author": "劉淑芬", "pub": "華逵文教科技", "year": "2024", "m": "5"}, {"id": "055383", "isbn": "9789577415837", "title": "詭屋", "cls": "861.57", "author": "雨穴", "pub": "春天國際文化", "year": "2025", "m": "8"}, {"id": "055384", "isbn": "9786263108981", "title": "國文課上遇見日本文化", "cls": "630", "author": "張胤賢", "pub": "麥田", "year": "2025", "m": "6"}, {"id": "055385", "isbn": "9786267785591", "title": "關係的追尋:克里希那穆提談人與世界的連結", "cls": "191.9", "author": "克里希那穆提", "pub": "橡實文化", "year": "2026", "m": "1"}, {"id": "055386", "isbn": "9786264144803", "title": "養成你的AI龍蝦管家 OpenClaw x NemoClaw x Google Antigravity x Claude Code:打造能查行程、收郵件、遠端控制電腦的AI代理人", "cls": "312.83", "author": "曾慶良", "pub": "博碩文化", "year": "2026", "m": "3"}, {"id": "055387", "isbn": "9786267252000", "title": "我們身上有光:照亮不確定的時刻", "cls": "177.2", "author": "歐巴馬", "pub": "商業周刊", "year": "2023", "m": "1"}, {"id": "055388", "isbn": "9786264182898", "title": "只死一次的人生:一生不過4000週,與其倒數,不如行動 正向心理學教你如何立刻改變.不留遺憾", "cls": "177.2", "author": "威爾曼", "pub": "遠流", "year": "2025", "m": "1"}, {"id": "055389", "isbn": "9786267785584", "title": "薩提爾的52個冥想練習:覺察內在的冰山,跟自己和解,與他人共好", "cls": "411.15", "author": "貝曼", "pub": "橡實文化", "year": "2026", "m": "4"}, {"id": "055390", "isbn": "9786264186001", "title": "癮行時代:諮商心理師帶你認識「癮」、離開「癮」、解開心裡那個「隱」", "cls": "415.95", "author": "蘇琮祺", "pub": "遠流", "year": "2026", "m": "4"}, {"id": "055392", "isbn": "9786263981553", "title": "曼谷攻略完全制霸.2025-2026", "cls": "738.2719", "author": "趙思語", "pub": "墨刻", "year": "2025", "m": "7"}, {"id": "055393", "isbn": "9789577419323", "title": "詭畫", "cls": "861.57", "author": "雨穴", "pub": "春天國際文化", "year": "2026", "m": "8"}, {"id": "055394", "isbn": "9789573287032", "title": "從A到A+:企業從優秀到卓越的奧祕", "cls": "494.2", "author": "柯林斯", "pub": "遠流", "year": "2025", "m": "4"}, {"id": "055395", "isbn": "9786263964204", "title": "Good eye 台灣挑剔指南:貓派狗派 都是台派!", "cls": "733.6", "author": "郭佩怜", "pub": "時報文化", "year": "2026", "m": "7"}, {"id": "055396", "isbn": "9789571388793", "title": "當呼吸化為空氣:一位天才神經外科醫師最後的生命洞察", "cls": "415.4682.", "author": "卡拉尼提", "pub": "時報文化", "year": "2026", "m": "4"}, {"id": "055397", "isbn": "9786263619036", "title": "殘光夜影", "cls": "873.57", "author": "克莉絲蒂", "pub": "遠流", "year": "2024", "m": "8"}, {"id": "055398", "isbn": "9789577419880", "title": "低成本生活:不用努力工作,生活依然從容不迫", "cls": "192.5", "author": "風野民", "pub": "春天國際文化", "year": "2025", "m": "1"}, {"id": "055399", "isbn": "9786264185295", "title": "冠軍之路:2024世界棒球12強賽感動全紀錄", "cls": "528.955", "author": "曾文誠", "pub": "遠流", "year": "2026", "m": "5"}, {"id": "055400", "isbn": "9786264182263", "title": "夢的智慧:學會夢的語言, 解讀夢的啟示, 分析心理大師榮格探索夢境的69把鑰匙", "cls": "175.1", "author": "瑪基雅諾", "pub": "遠流", "year": "2025", "m": "1"}, {"id": "055401", "isbn": "9786264199940", "title": "於是, 我成為不像樣的大", "cls": "177.2", "author": "宮能安", "pub": "時報文化", "year": "2026", "m": "1"}, {"id": "055402", "isbn": "9789571371160", "title": "天才在左 瘋子在右", "cls": "415.95", "author": "高銘", "pub": "時報文化", "year": "2026", "m": "4"}, {"id": "055403", "isbn": "9786267537848", "title": "梨泰院樹洞旅社", "cls": "862.6", "author": "曾元雍", "pub": "悅知文化精誠資訊", "year": "2025", "m": "8"}, {"id": "055404", "isbn": "9786264091961", "title": "希臘語課", "cls": "862.57", "author": "韓江", "pub": "漫遊者文化", "year": "2026", "m": "8"}, {"id": "055405", "isbn": "9789570878325", "title": "這21堂課, 有毒!:成癮科醫師寫給臺灣人的當代成癮課", "cls": "411.8", "author": "廖泊喬", "pub": "聯經", "year": "2025", "m": "4"}, {"id": "055406", "isbn": "9786264090940", "title": "福爾摩斯解剖圖鑑.人物篇", "cls": "873.57", "author": "狗尾草工房", "pub": "漫遊者文化", "year": "2025", "m": "8"}, {"id": "055407", "isbn": "9786267721834", "title": "在小山和小山之間", "cls": "863.57", "author": "李停", "pub": "悅知文化精誠資訊", "year": "2026", "m": "8"}, {"id": "055408", "isbn": "9786267366882", "title": "窮查理的普通常識:巴菲特50年智慧合夥人 查理.蒙格的人生哲學", "cls": "563.52", "author": "蒙格", "pub": "商業周刊", "year": "2026", "m": "5"}, {"id": "055409", "isbn": "9786267252949", "title": "大會計師教你從財報數字看懂經營本質", "cls": "495.47", "author": "張明輝", "pub": "城邦商業周刊", "year": "2026", "m": "4"}, {"id": "055410", "isbn": "9786263618923", "title": "西塔佛祕案", "cls": "873.57", "author": "克莉絲蒂", "pub": "遠流", "year": "2024", "m": "8"}, {"id": "055411", "isbn": "9786264181464", "title": "貓小鈴的奇妙日常:甜點師的瘋狂修業", "cls": "861.596", "author": "井上亞樹子", "pub": "遠流", "year": "2025", "m": "8"}, {"id": "055412", "isbn": "9789573298410", "title": "關於愛的一切", "cls": "199.8", "author": "胡克斯", "pub": "遠流", "year": "2022", "m": "1"}, {"id": "055413", "isbn": "9786264180887", "title": "與我平行的時間", "cls": "863.55", "author": "張惠菁", "pub": "遠流", "year": "2025", "m": "8"}, {"id": "055414", "isbn": "9789571373447", "title": "征服者與眾神:成吉思汗如何為蒙古帝國開創盛世", "cls": "625.71", "author": "魏澤福", "pub": "時報文化", "year": "2025", "m": "6"}, {"id": "055415", "isbn": "9786264195171", "title": "即使某天忘了你", "cls": "415.934", "author": "櫻木紫乃", "pub": "時報文化", "year": "2025", "m": "4"}, {"id": "055416", "isbn": "9789570871913", "title": "1723 世界史的11扇窗:接觸.匯聚與開創,從全球史中的人物,看見現代世界的格局與變化", "cls": "711", "author": "孔令偉", "pub": "聯經", "year": "2023", "m": "7"}, {"id": "055417", "isbn": "9786264199926", "title": "日花閃爍:台語的美麗詞彙 & 一百首詩", "cls": "863.51", "author": "若喬", "pub": "時報文化", "year": "2026", "m": "8"}, {"id": "055418", "isbn": "9789864492954", "title": "一步蔬果 小農雜學力:第一本校園食農全紀錄", "cls": "523.36", "author": "賴秋江", "pub": "幼獅文化", "year": "2023", "m": "5"}, {"id": "055419", "isbn": "9786267708996", "title": "恆溫動物形貌史,鳥類和哺乳類的外觀演化:色彩、結構、體型、行為......從可見的身體特徵出發,理解鳥類與哺乳類的演化選擇", "cls": "388.88", "author": "韋特摩爾", "pub": "沐燁文化", "year": "2026", "m": "3"}, {"id": "055420", "isbn": "9789570870121", "title": "圖解給投資新手的第一本股票理財書", "cls": "563.53", "author": "謝劍平", "pub": "聯經", "year": "2026", "m": "5"}, {"id": "055421", "isbn": "9789570869323", "title": "劉必榮的孫子兵法與談判謀略", "cls": "177.4", "author": "劉必榮", "pub": "聯經", "year": "2026", "m": "1"}, {"id": "055422", "isbn": "9789570874686", "title": "努力是癮", "cls": "863.55", "author": "寺尾哲也", "pub": "聯經", "year": "2024", "m": "8"}, {"id": "055423", "isbn": "9789576588396", "title": "科學實驗王.第二部.2:光與聲音的傳播", "cls": "301.3", "author": "Story a", "pub": "三采文化", "year": "2025", "m": "3"}, {"id": "055425", "isbn": "9789576589447", "title": "科學實驗王.第二部.3:加密貨幣與區塊鏈", "cls": "301.3", "author": "Story a", "pub": "三采文化", "year": "2025", "m": "3"}, {"id": "055426", "isbn": "9789863423386", "title": "科學實驗王.第二部.4:大數據與傳染病", "cls": "301.3", "author": "Story a", "pub": "三采文化", "year": "2026", "m": "3"}, {"id": "055427", "isbn": "9786263580473", "title": "科學實驗王.第二部.5:太空電梯與太空站", "cls": "301.3", "author": "Story a.", "pub": "三采文化", "year": "2025", "m": "3"}, {"id": "055428", "isbn": "9786263582668", "title": "科學實驗王.第二部.7:燃料與電池", "cls": "303.4", "author": "Story a", "pub": "三采文化", "year": "2024", "m": "3"}, {"id": "055429", "isbn": "9786263584129", "title": "科學實驗王.第二部.8:太空電梯與太空站", "cls": "301.3", "author": "Story a.", "pub": "三采文化", "year": "2024", "m": "3"}, {"id": "055430", "isbn": "9786263583436", "title": "跑跑薑餅人城市大逃亡.18:里約熱內盧(巴西)", "cls": "947.41", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "9"}, {"id": "055431", "isbn": "9786263585881", "title": "跑跑薑餅人城市大逃亡.20.布宜諾斯艾利斯(阿根廷)", "cls": "862.59", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "8"}, {"id": "055432", "isbn": "9786263588226", "title": "跑跑薑餅人城市大逃亡. 21:首爾", "cls": "862.599", "author": "宋道樹", "pub": "三采文化", "year": "2026", "m": "8"}, {"id": "055433", "isbn": "9786263588325", "title": "跑跑薑餅人城市大逃亡. 22:.河內", "cls": "862.599", "author": "宋道樹", "pub": "三采文化", "year": "2025", "m": "8"}, {"id": "055434", "isbn": "9786264253079", "title": "Vibe Coding 50道零程式碼開發:用AI打造生活與工作的應用程式", "cls": "312.83", "author": "Codapress", "pub": "碁峯資訊", "year": "2026", "m": "3"}, {"id": "055435", "isbn": "9789862627853", "title": "無限可能的卵:從生命起源到人類誕生,與生命共同演化的卵", "cls": "362", "author": "霍華", "pub": "貓頭鷹", "year": "2025", "m": "3"}, {"id": "055436", "isbn": "9786263908024", "title": "我在.生生世世:超越輪迴的靈性劇本,回歸自性本體以實踐人生目的", "cls": "216.9", "author": "吳至青", "pub": "商周", "year": "2026", "m": "2"}, {"id": "055437", "isbn": "9786267415160", "title": "殘穢", "cls": "861.57", "author": "小野不由美", "pub": "獨步文化", "year": "2026", "m": "8"}, {"id": "055438", "isbn": "9789862628164", "title": "能量、性、死亡:粒線體與我們的生命", "cls": "364.23", "author": "連恩", "pub": "貓頭鷹", "year": "2026", "m": "3"}, {"id": "055439", "isbn": "9789863128625", "title": "最強!Google AI 工作術:以 Gemini 3 為核心,串聯 NotebookLM 與滿滿 AI 工具,搞定資料分析、簡報製作、 教育訓練等日常工作", "cls": "312.83", "author": "蔡宜坦", "pub": "旗標", "year": "2026", "m": "3"}, {"id": "055440", "isbn": "9789863128762", "title": "全民養龍蝦OpenClaw超入門", "cls": "312.83", "author": "施威銘研究室", "pub": "旗標科技", "year": "2026", "m": "3"}, {"id": "055441", "isbn": "9789575326487", "title": "零基礎!TOEIC多益文法400題:從國中文法前進多益600分", "cls": "805.1895", "author": "TEX加藤", "pub": "眾文圖書", "year": "2025", "m": "8"}, {"id": "055442", "isbn": "9789863128687", "title": "Google Gemini API Agent開發手冊:GenAI SDK x Live API x Google ADK", "cls": "312.83", "author": "施威銘研究室", "pub": "旗標", "year": "2026", "m": "3"}, {"id": "055443", "isbn": "9789863128724", "title": "AI × SOP 生成式 AI 工作流:第一線 Prompt 驅動，打造企業 SOP", "cls": "312.83", "author": "陳泳睿", "pub": "旗標科技", "year": "2026", "m": "3"}, {"id": "055444", "isbn": "9789863128571", "title": "超有料!職場第一實用的 AI 簡報術", "cls": "494.6", "author": "廖韋評", "pub": "旗標科技", "year": "2026", "m": "4"}, {"id": "055445", "isbn": "9789865069742", "title": "越看越醒腦的財報書:零基礎秒懂人生必會的3大財報,1個案例搞定此生所需財務知識!", "cls": "495.47", "author": "易徒森", "pub": "高寶國際", "year": "2020", "m": "4"}, {"id": "055446", "isbn": "9786264144155", "title": "圖解生物學:探索從細胞到生命的奧祕", "cls": "360", "author": "陳根", "pub": "博碩文化", "year": "2026", "m": "3"}, {"id": "055447", "isbn": "9786267659038", "title": "做生命的獵遊者:非洲野性大地的生命養分", "cls": "191", "author": "徐蘊見", "pub": "健行文化", "year": "2025", "m": "1"}, {"id": "055448", "isbn": "9789863128816", "title": "n8n x Vibe Coding 本機 AI Agent 自動化工作流", "cls": "494.8", "author": "陳會安", "pub": "旗標科技", "year": "2026", "m": "4"}, {"id": "055449", "isbn": "9789864506958", "title": "帶著故鄉行走", "cls": "528.2", "author": "吳俞萱", "pub": "九歌", "year": "2024", "m": "5"}, {"id": "055450", "isbn": "9789863128267", "title": "超有料!職場第一高效 Excel x AI自動化工作術", "cls": "312.49E9", "author": "施威銘研究室", "pub": "旗標科技", "year": "2026", "m": "3"}, {"id": "055451", "isbn": "9786264024662", "title": "雪中悍刀行. 第二部. 二:劍仙盡低眉", "cls": "857.7", "author": "烽火戲諸侯", "pub": "高寶國際", "year": "2026", "m": "8"}, {"id": "055452", "isbn": "9786264024679", "title": "雪中悍刀行. 第二部. 三:新桃換舊符", "cls": "857.7", "author": "烽火戲諸侯", "pub": "高寶國際", "year": "2026", "m": "8"}, {"id": "055453", "isbn": "9786264024686", "title": "雪中悍刀行. 第二部. 四:杯酒賀新涼", "cls": "857.7", "author": "烽火戲諸侯", "pub": "高寶國際", "year": "2026", "m": "8"}, {"id": "055454", "isbn": "9789865061340", "title": "雪中悍刀行$h第三部.6:夫子上武當", "cls": "857.7", "author": "烽火戲諸侯", "pub": "高寶國際", "year": "2021", "m": "8"}, {"id": "055455", "isbn": "9786267476635", "title": "芭蕾舞男孩:百老匯真實故事X對抗偏見的勵志傳奇", "cls": "874.599", "author": "奧爾曼", "pub": "小宇宙文化", "year": "2025", "m": "8"}, {"id": "055456", "isbn": "9786267476055", "title": "上臺表演那一天", "cls": "874.59", "author": "巴奈特", "pub": "小宇宙文化", "year": "2024", "m": "8"}, {"id": "055457", "isbn": "9786269983032", "title": "日本語之森:一本合格日檢N1,四大題型複習x兩回模擬試題", "cls": "803.189", "author": "日本語之森日本語研究所", "pub": "笛藤", "year": "2025", "m": "8"}, {"id": "055458", "isbn": "9786267203354", "title": "1天10分鐘,輕鬆考高分:NEW TOEIC突破900分必考文法", "cls": "805.1895", "author": "張小怡", "pub": "易可數位行銷", "year": "2024", "m": "8"}, {"id": "055459", "isbn": "9786269977345", "title": "Superfood!地瓜不簡單:料理點心七十二變,國民美食好吃good!", "cls": "427.1", "author": "曾秀微", "pub": "樂知", "year": "2024", "m": "4"}, {"id": "055460", "isbn": "9789861616094", "title": "給孩子的廚房實驗室:52個在家就能玩的科學實驗 廚房就是你的實驗室!", "cls": "303.4", "author": "海內克", "pub": "信誼基金", "year": "2020", "m": "3"}, {"id": "055461", "isbn": "9789863414971", "title": "經濟指標教你加減碼:景氣榮枯都獲利的聰明投資術", "cls": "563.52", "author": "達格尼諾", "pub": "麥格羅希爾", "year": "2024", "m": "5"}, {"id": "055462", "isbn": "9786263842984", "title": "乩身01:踏火伏魔的罪人", "cls": "863.57", "author": "施威銘研究室", "pub": "蓋亞文化", "year": "2026", "m": "8"}, {"id": "055463", "isbn": "9786267203378", "title": "自遊自在 自由行旅遊英語:自助旅行,看這本就夠了", "cls": "805.188", "author": "張小怡", "pub": "布可屋文化", "year": "2026", "m": "8"}, {"id": "055464", "isbn": "9789862439326", "title": "汪喵偵探第2部.2.掃蕩偽鈔大作戰", "cls": "862.596", "author": "李承敏", "pub": "幼福文化", "year": "2025", "m": "8"}, {"id": "055465", "isbn": "9789864493586", "title": "親子手機5大問題Q&A:如何訂定手機使用規則", "cls": "528.2", "author": "石田勝紀", "pub": "幼獅文化", "year": "2025", "m": "5"}, {"id": "055466", "isbn": "9789868976870", "title": "成為自由人", "cls": "177.2", "author": "李惠貞", "pub": "維摩舍文教", "year": "2025", "m": "1"}, {"id": "055467", "isbn": "9786269687039", "title": "西藏生死書:心靈經典與全球暢銷", "cls": "226.961", "author": "仁波切", "pub": "張老師文化", "year": "2026", "m": "2"}, {"id": "055468", "isbn": "9786267553053", "title": "熱戀:邊界往返的信", "cls": "863.56", "author": "吳俞萱", "pub": "南方家園文化", "year": "2025", "m": "8"}, {"id": "055469", "isbn": "9786267365915", "title": "我能完成目標:培養行動力!", "cls": "177.2", "author": "讀客小學生閱讀研究社. 心理組", "pub": "字畝文化", "year": "2025", "m": "1"}, {"id": "055470", "isbn": "9786267504086", "title": "我想變專心:培養專注力!", "cls": "177.2", "author": "讀客小學生閱讀研究社.心理組", "pub": "字畝文化", "year": "2025", "m": "1"}, {"id": "055471", "isbn": "9786267504185", "title": "我能學得更好:培養學習力!", "cls": "177.2", "author": "讀客小學生閱讀研究社.心理組", "pub": "字畝文化", "year": "2024", "m": "1"}, {"id": "055472", "isbn": "9786267504291", "title": "我會欣賞美:培養審美力!", "cls": "177.2", "author": "讀客小學生閱讀研究社.心理組", "pub": "字畝文化", "year": "2024", "m": "1"}, {"id": "055473", "isbn": "9786267504307", "title": "我要上臺去:培養演講力!", "cls": "177.2", "author": "讀客小學生閱讀研究社心理組", "pub": "遠足文化", "year": "2024", "m": "1"}, {"id": "055474", "isbn": "9789864062492", "title": "我說不 沒有對不起誰", "cls": "177.2", "author": "史密斯", "pub": "寶瓶文化", "year": "2021", "m": "1"}, {"id": "055475", "isbn": "9789865258344", "title": "影響力法則:建立信任.連結和社群意識的藝術", "cls": "541.6", "author": "李維", "pub": "遠見天下", "year": "2024", "m": "5"}, {"id": "055476", "isbn": "9786267206713", "title": "走向內在:四國遍路 聖雅各朝聖道 AT&PCT 三大洲萬里徒步記", "cls": "719", "author": "Josie", "pub": "大塊文化", "year": "2023", "m": "7"}, {"id": "055477", "isbn": "9786267792193", "title": "脈的禮讚:許中華醫師的12堂脈學課,解五臟疾病與癌症之謎", "cls": "413.23", "author": "許中華", "pub": "天下生活", "year": "2026", "m": "4"}, {"id": "055478", "isbn": "9786263552500", "title": "老師, 我忘記寫功課!", "cls": "861.596", "author": "山本悅子", "pub": "遠見天下文化", "year": "2025", "m": "8"}, {"id": "055479", "isbn": "9789863570646", "title": "紅書(讀者版)", "cls": "170.189", "author": "榮格", "pub": "心靈工坊文化", "year": "2026", "m": "1"}, {"id": "055480", "isbn": "9789862134467", "title": "反脆弱:脆弱的反義詞不是堅強,是反脆弱", "cls": "173.7", "author": "塔雷伯", "pub": "大塊文化", "year": "2026", "m": "1"}, {"id": "055481", "isbn": "9786264064002", "title": "校園生存挑戰. 1, 尷尬的開學日", "cls": "885.3596", "author": "查瑪柯娃", "pub": "親子天下", "year": "2026", "m": "8"}, {"id": "055482", "isbn": "9786267388419", "title": "再談阿共打來怎麼辦:從烏克蘭戰場看台海局勢", "cls": "573.09", "author": "王立", "pub": "大塊文化", "year": "2024", "m": "5"}, {"id": "055483", "isbn": "9786264064804", "title": "一片茶葉的時空大冒險:從茶金歲月到全球珍奶", "cls": "863.596", "author": "吳雅怡", "pub": "親子天下", "year": "2026", "m": "8"}, {"id": "055484", "isbn": "9786264175036", "title": "AI好學圖鑑:全面快速入門", "cls": "312.83", "author": "DK出版社編輯群", "pub": "遠見天下", "year": "2025", "m": "3"}, {"id": "055485", "isbn": "9789864065196", "title": "植物都知道:植物如何以五感感知世界?", "cls": "373", "author": "查莫維茨", "pub": "寶瓶文化", "year": "2026", "m": "3"}, {"id": "055486", "isbn": "9789860777819", "title": "阿共打來怎麼辦:你以為知道但實際一無所知的台海軍事常識", "cls": "573.09", "author": "王立", "pub": "大塊文化", "year": "2024", "m": "5"}, {"id": "055487", "isbn": "9789864062966", "title": "羞辱創傷:最日常, 卻最椎心的痛楚", "cls": "178.8", "author": "周慕姿", "pub": "寶瓶", "year": "2026", "m": "1"}, {"id": "055488", "isbn": "9786267713617", "title": "通氣血,排文明毒", "cls": "413.21", "author": "莊佳穎", "pub": "天下雜誌", "year": "2026", "m": "4"}, {"id": "055489", "isbn": "9786267713242", "title": "穿越中年迷霧:榮格心理學家的指引,開啟內在對話,理解焦慮.創傷.夢境.陰影,解答生命難題,活出自己", "cls": "170.181", "author": "霍利斯", "pub": "天下雜誌", "year": "2026", "m": "1"}, {"id": "055490", "isbn": "9786264062152", "title": "SEL全方位實踐指南:掌握腦科學的社會情緒學習80+", "cls": "521.18", "author": "斯普格", "pub": "親子天下", "year": "2026", "m": "5"}, {"id": "055491", "isbn": "9786263552517", "title": "老師, 我不會寫讀書心得!", "cls": "861.596", "author": "山本悅子", "pub": "遠見天下文化", "year": "2025", "m": "8"}, {"id": "055492", "isbn": "9789864063888", "title": "親密恐懼:為什麼我們無法好好愛人, 好好被愛?", "cls": "178.8", "author": "周慕姿", "pub": "寶瓶文化", "year": "2026", "m": "1"}, {"id": "055493", "isbn": "9789864064922", "title": "當我告別教職:一位離職教師的沉痛告白與深情祝福", "cls": "522.07", "author": "梁芳瑜", "pub": "寶瓶文化", "year": "2025", "m": "5"}, {"id": "055494", "isbn": "9789864063888", "title": "親密恐懼:為什麼我們無法好好愛人, 好好被愛?", "cls": "178.8", "author": "周慕姿", "pub": "寶瓶文化", "year": "2026", "m": "1"}, {"id": "055495", "isbn": "9789863988038", "title": "讓感受自由:2000所學校都在上的耶魯大學情緒素養課,學會解讀與表達情緒,開啟被忽略的最大潛能!", "cls": "176.52", "author": "布雷克特", "pub": "天下雜誌", "year": "2026", "m": "1"}, {"id": "055496", "isbn": "9789863571391", "title": "創傷的內在世界:生命中難以承受的重, 心靈如何回應", "cls": "178.8", "author": "卡爾謝", "pub": "心靈工坊", "year": "2025", "m": "1"}, {"id": "055497", "isbn": "9789863986737", "title": "強大內心的自我對話習慣:緊張下維持專注, 混亂中清楚思考, 身陷困難不被負面情緒拖垮, 任何時刻都發揮高水準表現", "cls": "176.49", "author": "克洛斯", "pub": "天下雜誌", "year": "2025", "m": "1"}, {"id": "055498", "isbn": "9786267680490", "title": "北歐時間:世界第一幸福國度教會我的事", "cls": "747.03", "author": "日暮Inko", "pub": "幸福文化", "year": "2026", "m": "7"}, {"id": "055499", "isbn": "9786267506622", "title": "自己的命案自己破", "cls": "873.57", "author": "佩林", "pub": "堡壘文化", "year": "2025", "m": "8"}, {"id": "055500", "isbn": "9786267780282", "title": "世界大局地圖全解讀.6:攤開165張焦點地圖, 看懂世界關鍵動向!", "cls": "578", "author": "雪克", "pub": "野人文化", "year": "2025", "m": "5"}, {"id": "055501", "isbn": "9789863848905", "title": "世界大局地圖全解讀.5:最視覺化的地緣政治圖輯,攤開129張主題地圖,帶你看懂全政治劇變!", "cls": "578", "author": "雪克", "pub": "野人文化", "year": "2023", "m": "5"}, {"id": "055502", "isbn": "9786264235754", "title": "超圖解芭蕾史中的關鍵時刻", "cls": "976.6209", "author": "陳蒨蒨", "pub": "五南圖書", "year": "2025", "m": "9"}, {"id": "055503", "isbn": "9786263665217", "title": "表演藝術培出心能力:情緒、酷凌、跨域及國際教學方案", "cls": "980.3", "author": "邱鈺鈞", "pub": "五南", "year": "2023", "m": "9"}, {"id": "055504", "isbn": "9786263661530", "title": "探究與實作:科學遊戲導向", "cls": "523.36", "author": "許良榮", "pub": "五南圖書", "year": "2023", "m": "5"}, {"id": "055505", "isbn": "9786263666948", "title": "臺灣茶葉感官品評實作手冊", "cls": "439.4", "author": "農業部茶及飲料作物改良場", "pub": "五南", "year": "2025", "m": "4"}, {"id": "055506", "isbn": "9786263939417", "title": "茶葉食農教育參考教案手冊. 113年國高中組", "cls": "523.35", "author": "農業部茶及飲料作物改良場", "pub": "五南", "year": "2025", "m": "5"}, {"id": "055507", "isbn": "9786267645833", "title": "安納托利亞的刺客", "cls": "735.13", "author": "沙博爾夫斯基", "pub": "衛城/左岸文化", "year": "2025", "m": "7"}, {"id": "055508", "isbn": "9786269501434", "title": "華爾街幽靈的禮物:頂尖交易員敗中求勝的三個祕密", "cls": "563.534", "author": "辛普森", "pub": "一起來", "year": "2021", "m": "5"}, {"id": "055509", "isbn": "9786267680070", "title": "奇岩館殺人案", "cls": "861.57", "author": "高野結史", "pub": "幸福文化遠足文化", "year": "2026", "m": "8"}, {"id": "055510", "isbn": "9786267483190", "title": "帶外婆公主去倫敦!", "cls": "861.57", "author": "椹野道流", "pub": "大塊文化", "year": "2025", "m": "8"}, {"id": "055511", "isbn": "9786267654309", "title": "繪本工作細胞.6.天降奇兵!乳酸菌與害菌大亂鬥", "cls": "364", "author": "清水茜", "pub": "小熊", "year": "2025", "m": "3"}, {"id": "055512", "isbn": "9786263149212", "title": "乳房龐克", "cls": "947.41", "author": "呂榭", "pub": "木馬文化", "year": "2026", "m": "9"}, {"id": "055513", "isbn": "9789578423756", "title": "超馬童話大冒險.1:誰來出任務?", "cls": "863.596", "author": "王文華", "pub": "字畝文化", "year": "2024", "m": "8"}, {"id": "055514", "isbn": "9789578423930", "title": "超馬童話大冒險.2:在一起練習曲", "cls": "863.596", "author": "顏志豪", "pub": "遠足文化", "year": "2025", "m": "8"}, {"id": "055515", "isbn": "9789869803984", "title": "超馬童話大冒險.3:我們不同國", "cls": "863.596", "author": "劉思源", "pub": "字畝文化", "year": "2023", "m": "8"}, {"id": "055516", "isbn": "9789865505059", "title": "超馬童話大冒險.4:大家來分享", "cls": "863.596", "author": "王淑芬", "pub": "字畝文化", "year": "2023", "m": "8"}, {"id": "055517", "isbn": "9789865505158", "title": "超馬童話大冒險.5:誰是老大?", "cls": "863.596", "author": "劉思源", "pub": "字畝文化", "year": "2023", "m": "8"}, {"id": "055518", "isbn": "9789865505219", "title": "超馬童話大冒險.6:你是誰?", "cls": "863.596", "author": "亞平", "pub": "字畝文化", "year": "2024", "m": "8"}, {"id": "055519", "isbn": "9789865505363", "title": "超馬童話大冒險.7:我愛你", "cls": "863.596", "author": "王文華", "pub": "字畝文化", "year": "2023", "m": "8"}, {"id": "055520", "isbn": "9789865505479", "title": "超馬童話大冒險.8:說再見", "cls": "863.596", "author": "王淑芬", "pub": "字畝文化", "year": "2020", "m": "8"}, {"id": "055521", "isbn": "9789869966832", "title": "人類群星閃耀時:14個容易被人忽略卻又意義深遠的[星光時刻]", "cls": "781.05", "author": "褚威格", "pub": "方舟文化", "year": "2026", "m": "7"}, {"id": "055522", "isbn": "9789865084004", "title": "圖解 世界政治大局:以矩陣圖輕鬆看懂政治思想!快速掌握全球局勢的底層邏輯!", "cls": "570.9", "author": "茂木誠", "pub": "遠足文化", "year": "2025", "m": "5"}, {"id": "055523", "isbn": "9789579542760", "title": "這是愛女,也是厭女:如何看穿這世界拉攏與懲戒女人的兩手策略?", "cls": "544.52", "author": "王曉丹", "pub": "大家", "year": "2025", "m": "5"}, {"id": "055524", "isbn": "9786267884164", "title": "值得過上好日子:從情緒消費到聰明投資, 克服「不夠花、不敢花」的金錢焦慮、學會建立有安心感的全方位財務計畫", "cls": "563", "author": "精算媽咪珊迪兔", "pub": "幸福文化", "year": "2026", "m": "5"}, {"id": "055525", "isbn": "9786267645017", "title": "區判:品味與美學的知識漫畫", "cls": "541.7", "author": "布赫迪厄", "pub": "衛城", "year": "2026", "m": "5"}, {"id": "055526", "isbn": "9789869460347", "title": "性別作為動詞:巷仔口社會學.2", "cls": "544.7", "author": "戴伯芬", "pub": "大家社", "year": "2023", "m": "5"}, {"id": "055527", "isbn": "9786267365991", "title": "搗蛋神明來我家.1:神明誕生了!", "cls": "861.596", "author": "廣嶋玲子", "pub": "字畝文化", "year": "2024", "m": "8"}, {"id": "055528", "isbn": "9786267504000", "title": "搗蛋神明來我家.2:敵人是寶寶!", "cls": "861.596", "author": "廣嶋玲子", "pub": "字畝文化遠足文化", "year": "2024", "m": "8"}, {"id": "055529", "isbn": "9786267504017", "title": "搗蛋神明來我家.3:神明大集合!", "cls": "861.596", "author": "廣嶋玲子", "pub": "字畝文化遠足文化", "year": "2024", "m": "8"}, {"id": "055530", "isbn": "9786263559028", "title": "安心國小.9:有話好好說", "cls": "863.596", "author": "岑澎維", "pub": "遠見天下文化", "year": "2026", "m": "8"}, {"id": "055531", "isbn": "9786263559035", "title": "安心國小.10:大家都不懂我!", "cls": "863.596", "author": "岑澎維", "pub": "遠見天下文化", "year": "2026", "m": "8"}, {"id": "055532", "isbn": "9786263553736", "title": "狐狸偵探傑克.1:尋找黃金雞", "cls": "875.596", "author": "畢爾曼", "pub": "遠見天下文化", "year": "2025", "m": "8"}, {"id": "055533", "isbn": "9786263553743", "title": "狐狸偵探傑克.2:三隻小豬和工地幽靈", "cls": "875.596", "author": "畢爾曼", "pub": "遠見天下文化", "year": "2024", "m": "8"}, {"id": "055534", "isbn": "9786263553750", "title": "狐狸偵探傑克.3:吹牛男爵的幻想帽", "cls": "875.596", "author": "畢爾曼", "pub": "遠見天下文化", "year": "2025", "m": "8"}, {"id": "055535", "isbn": "9789865257583", "title": "安心國小.5:時間, 等等我", "cls": "863.596", "author": "岑澎維", "pub": "遠見天下文化", "year": "2026", "m": "8"}, {"id": "055536", "isbn": "9789865257590", "title": "安心國小.6:這樣用錢可以嗎?", "cls": "863.596", "author": "岑澎維", "pub": "遠見天下文化", "year": "2026", "m": "8"}, {"id": "055537", "isbn": "9786263554207", "title": "安心國小.7:我就是想贏!", "cls": "863.596", "author": "岑澎維", "pub": "遠見天下文化", "year": "2026", "m": "8"}, {"id": "055538", "isbn": "9786263554214", "title": "安心國小.8:又不是我的錯!", "cls": "863.596", "author": "岑澎維", "pub": "遠見天下文化", "year": "2026", "m": "8"}, {"id": "055539", "isbn": "9789863985624", "title": "解愛", "cls": "121.337", "author": "蔡璧名", "pub": "天下雜誌", "year": "2026", "m": "1"}, {"id": "055540", "isbn": "9786269990085", "title": "老師這樣說,用SEL教出正向情緒力:40種對話技巧讓親師生三贏,班級經營更Easy", "cls": "527", "author": "金城孝", "pub": "寫樂文化", "year": "2026", "m": "5"}, {"id": "055541", "isbn": "9786263003583", "title": "挑戰新制多益閱讀滿分:10 回模擬試題1000題", "cls": "805.1895", "author": "崔", "pub": "寂天文化", "year": "2026", "m": "8"}, {"id": "055542", "isbn": "9786267478455", "title": "訪父記:他的白髮, 與我們的時代", "cls": "783.3886", "author": "瞿筱葳", "pub": "春山", "year": "2025", "m": "7"}, {"id": "055543", "isbn": "9789860659788", "title": "真相製造:從聖戰士媽媽.極權政府.網軍教練.境外勢力.打假部隊.內容農場主人到政府小編", "cls": "541.415", "author": "劉致昕", "pub": "春山", "year": "2025", "m": "5"}, {"id": "055544", "isbn": "9786267329023", "title": "新制多益文法滿分關鍵", "cls": "805.1895", "author": "蕭志億", "pub": "日月文化", "year": "2025", "m": "8"}, {"id": "055545", "isbn": "9789869436557", "title": "人際歷程取向治療:整合模式", "cls": "178.8", "author": "泰伯", "pub": "新加坡商聖智學習", "year": "2025", "m": "1"}, {"id": "055546", "isbn": "9786267165430", "title": "色彩的物競天擇 生命沒那麼理所當然:可見光譜、三色視覺、綠葉之謎、紅果誘惑......我們看到的顏色, 是演化篩選後的版本", "cls": "362", "author": "史鈞", "pub": "清文華泉", "year": "2026", "m": "3"}, {"id": "055547", "isbn": "9786267678381", "title": "第一本黴菌全書:微觀黴菌世界", "cls": "369.6", "author": "YCM優克美科技暨黴菌研究中心", "pub": "商業周刊發行", "year": "2025", "m": "3"}, {"id": "055548", "isbn": "9789863386643", "title": "野貓軍團烤麵包", "cls": "861.59", "author": "工藤紀子", "pub": "臺灣東方", "year": "2026", "m": "8"}, {"id": "055549", "isbn": "9789863386575", "title": "野貓軍團愛吃冰", "cls": "861.59", "author": "工藤紀子", "pub": "台灣東方", "year": "2026", "m": "8"}, {"id": "055550", "isbn": "9789863386322", "title": "野貓軍團飛上天", "cls": "861.59", "author": "工藤紀子", "pub": "台灣東方", "year": "2026", "m": "8"}, {"id": "055551", "isbn": "9789863386735", "title": "野貓軍團開火車", "cls": "861.59", "author": "工藤紀子", "pub": "臺灣東方", "year": "2026", "m": "8"}, {"id": "055552", "isbn": "9789863386834", "title": "野貓軍團壽司店", "cls": "861.59", "author": "工藤紀子", "pub": "台灣東方", "year": "2026", "m": "8"}, {"id": "055553", "isbn": "9786267757536", "title": "Vibe Coding CLI頂級開發:Claude Code前瞻菁英育成手冊", "cls": "312.83", "author": "胡嘉璽", "pub": "深智數位", "year": "2026", "m": "3"}, {"id": "055554", "isbn": "9786267889091", "title": "勝過AI的技能:玩熟Mermaid做出最專業的圖表", "cls": "312.83", "author": "胡嘉璽", "pub": "深智數位", "year": "2026", "m": "3"}, {"id": "055555", "isbn": "9786267889039", "title": "AI高效學習術:人工智慧時代學得更聰明", "cls": "312.83", "author": "洪錦魁", "pub": "深智數位", "year": "2026", "m": "3"}, {"id": "055556", "isbn": "9786267889220", "title": "AI智慧生活術:打造你的AI生活作業系統", "cls": "312.83", "author": "洪錦魁", "pub": "深智數位", "year": "2026", "m": "3"}, {"id": "055557", "isbn": "9786267757819", "title": "AI Agent智能工作流:設計與自動化全實戰", "cls": "312.83", "author": "楊皓霖", "pub": "深智數位", "year": "2026", "m": "3"}, {"id": "055558", "isbn": "9786267757932", "title": "NotebookLM筆記術:打造你的AI「第二大腦」", "cls": "312.83", "author": "洪錦魁", "pub": "深智數位", "year": "2026", "m": "3"}, {"id": "055559", "isbn": "9786267856116", "title": "自由行觀光英語:旅遊英語，3分鐘上手，寫給想要馬上開口說英語的人", "cls": "805.188", "author": "張瑪麗", "pub": "布可屋文化", "year": "2026", "m": "8"}, {"id": "055560", "isbn": "9786267884164", "title": "大人只知道部分的世界:寫給年輕的你", "cls": "192.13", "author": "李惠貞", "pub": "維摩舍文教", "year": "2026", "m": "1"}, {"id": "055561", "isbn": "9789863593409", "title": "地海古墓", "cls": "874.57", "author": "勒瑰恩", "pub": "木馬文化", "year": "2025", "m": "8"}, {"id": "055562", "isbn": "9789863597247", "title": "沉默之聲", "cls": "874.57", "author": "勒瑰恩", "pub": "木馬文化", "year": "2024", "m": "8"}, {"id": "055563", "isbn": "9789866385940", "title": "使女的故事", "cls": "885.357", "author": "愛特伍", "pub": "九歌", "year": "2024", "m": "8"}, {"id": "055564", "isbn": "9786263142756", "title": "月經不平等:一段女性身體的覺醒之路", "cls": "417.124", "author": "迪艾波", "pub": "木馬文化", "year": "2025", "m": "4"}, {"id": "055565", "isbn": "9786263107267", "title": "不只是厭女", "cls": "544.52", "author": "曼恩", "pub": "麥田", "year": "2026", "m": "5"}, {"id": "055566", "isbn": "9789860661545", "title": "有毒的男子氣概:從希臘英雄到現代新好男人,歷史如何層層建構「男人」的形象", "cls": "173.32", "author": "盧省言", "pub": "大塊文化", "year": "2021", "m": "1"}, {"id": "055567", "isbn": "9786263106765", "title": "性公民權", "cls": "527.59", "author": "赫希", "pub": "麥田", "year": "2025", "m": "5"}, {"id": "055568", "isbn": "9789865580827", "title": "米澤穗信與古籍研究社", "cls": "861.57", "author": "米澤穗信", "pub": "獨步文化", "year": "2021", "m": "8"}, {"id": "055569", "isbn": "9789862488805", "title": "日本歷史名人:Nippon所藏", "cls": "803.18", "author": "EZ Japan編輯部", "pub": "日月文化", "year": "2020", "m": "8"}, {"id": "055570", "isbn": "9786263106710", "title": "天真的人類學家:小泥屋筆記&重返多瓦悠蘭", "cls": "536.642", "author": "巴利", "pub": "麥田", "year": "2025", "m": "5"}, {"id": "055571", "isbn": "9789863365372", "title": "開始在越南自助旅行", "cls": "738.39", "author": "吳靜雯", "pub": "太雅", "year": "2025", "m": "7"}, {"id": "055572", "isbn": "9789863365365", "title": "開始在關西自助旅行", "cls": "731.75", "author": "King Chen", "pub": "太雅", "year": "2025", "m": "7"}, {"id": "055573", "isbn": "9789860777857", "title": "人生4千個禮拜:時間不是用來掌控的,直面「生命的有限」,打造游刃有餘的時間運用觀", "cls": "191.9", "author": "柏克曼", "pub": "大塊文化", "year": "2026", "m": "1"}, {"id": "055574", "isbn": "9786264036580", "title": "冬季限定夾心巧克力事件", "cls": "861.57", "author": "米澤穗信", "pub": "城邦文化尖端", "year": "2025", "m": "8"}, {"id": "055575", "isbn": "9786263156166", "title": "死亡與奇術師", "cls": "873.57", "author": "米德", "pub": "臉譜", "year": "2025", "m": "8"}, {"id": "055576", "isbn": "9786263151321", "title": "被誤解的犯罪學:從全球數據庫看犯罪心理及行為的十一個常見偏誤", "cls": "548.5", "author": "蓋許", "pub": "臉譜", "year": "2026", "m": "5"}, {"id": "055577", "isbn": "9786267780510", "title": "莎士比亞戲劇故事集", "cls": "873.4332", "author": "莎士比亞", "pub": "野人文化", "year": "2026", "m": "8"}, {"id": "055578", "isbn": "9789863705437", "title": "微習慣的力量:0.1%度祕密", "cls": "177.2", "author": "佐藤傳", "pub": "楓葉社文化", "year": "2023", "m": "1"}, {"id": "055579", "isbn": "9789862944424", "title": "著賊偷:關於那些被偷走的記憶", "cls": "863.57", "author": "阿布", "pub": "玉山社", "year": "2025", "m": "8"}, {"id": "055580", "isbn": "9786263614406", "title": "詩經植物筆記:古典文學x自然科學經典讀本,發現詩經裡的植物之美", "cls": "831.18", "author": "韓育生", "pub": "遠流", "year": "2024", "m": "8"}, {"id": "055581", "isbn": "9786263614413", "title": "詩經植物筆記:古典文學x自然科學經典讀本,發現詩經裡的植物之美", "cls": "831.18", "author": "韓育生", "pub": "遠流", "year": "2024", "m": "8"}, {"id": "055582", "isbn": "9789573294016", "title": "上一堂人生國文課:希望老師有教我的事,關於際遇、抉擇、傷痛,以及無論順逆都能優雅起身", "cls": "836", "author": "羊咩老師", "pub": "遠流", "year": "2022", "m": "8"}, {"id": "055583", "isbn": "9786264186421", "title": "賣瓜的人", "cls": "863.55", "author": "洪倪", "pub": "遠流", "year": "2026", "m": "8"}, {"id": "055584", "isbn": "9786264187046", "title": "家人使用說明書:腦科學專家寫給總是被家人一秒惹怒的你", "cls": "544.14", "author": "黑川伊保子", "pub": "遠流", "year": "2026", "m": "5"}, {"id": "055585", "isbn": "9786264187008", "title": "你不是一個問題, 別再修正自己", "cls": "192.1", "author": "戴邁樂", "pub": "遠流", "year": "2026", "m": "1"}, {"id": "055586", "isbn": "9789573299097", "title": "一本書終結你的拖延症:透過「小行動」打開大腦的行動開關,懶人也能變身「行動派」的37個科學方法", "cls": "177.2", "author": "大平信孝", "pub": "遠流", "year": "2026", "m": "1"}, {"id": "055587", "isbn": "9786264331081", "title": "那些書店這些人:書店如何形塑文化與生活 獻給書店與書店員的情書", "cls": "487.652", "author": "佛里斯", "pub": "大塊文化", "year": "2025", "m": "4"}, {"id": "055588", "isbn": "9786264330954", "title": "百工計畫:這個世界上,再也沒有任何工作能嚇倒我,如果有,就閃電換工作", "cls": "863.55", "author": "藍白拖", "pub": "大塊文化", "year": "2025", "m": "8"}, {"id": "055589", "isbn": "9786264331883", "title": "美術館裡的一天", "cls": "877.59", "author": "馬蒂安基利", "pub": "大塊文化", "year": "2026", "m": "8"}, {"id": "055590", "isbn": "9786264331630", "title": "說故事:每個人都需要講故事, 也可以寫出好故事", "cls": "811.1", "author": "卡利,", "pub": "大塊文化", "year": "2026", "m": "8"}, {"id": "055591", "isbn": "9786264700153", "title": "文明的原點:天文地理如何塑造人類歷史", "cls": "391", "author": "達奈爾", "pub": "天下文化", "year": "2026", "m": "3"}, {"id": "055592", "isbn": "9786264179829", "title": "深刻認識你自己:勇氣、紀律、能力、心態,童至祥的人生導航儀", "cls": "177.2", "author": "童至祥", "pub": "遠見天下文化", "year": "2026", "m": "1"}, {"id": "055593", "isbn": "9786264186650", "title": "機智人類的自然生活公約:從城市到山川海洋, 不可不知的法律規則", "cls": "367", "author": "一日一種", "pub": "遠流", "year": "2026", "m": "3"}, {"id": "055594", "isbn": "9786264331180", "title": "吃貨筆記。:孤獨的美食家松重豐的人生美味清單", "cls": "427.07", "author": "松重豐", "pub": "大塊文化", "year": "2025", "m": "4"}, {"id": "055595", "isbn": "9786264186742", "title": "讓故事動起來的道具設計寶典:繪師、設計師、插畫家的387個實用場景營造與敘事靈感", "cls": "947.45", "author": "山歌", "pub": "遠流", "year": "2026", "m": "9"}, {"id": "055596", "isbn": "9786264185486", "title": "你不用硬撐 也不必離職:身心科醫師的6堂職場健心課 教你打造心理韌性, 重啟工作動能", "cls": "494.35", "author": "朱仲翔", "pub": "遠流", "year": "2026", "m": "4"}, {"id": "055598", "isbn": "9786264186353", "title": "別害怕衝突:不當機、不吞忍,不做軟柿子,跟任何人(即使立場完全不同)都能有效溝通", "cls": "177.1", "author": "博格西安", "pub": "遠流", "year": "2026", "m": "1"}, {"id": "055599", "isbn": "9786264186407", "title": "好詩,裝得下整個世界的美", "cls": "821.8", "author": "都靚", "pub": "遠流", "year": "2026", "m": "8"}, {"id": "055600", "isbn": "9786264185622", "title": "信任效應:AI時代駕馭演算法的勝出關鍵", "cls": "494.1", "author": "陳顯立", "pub": "遠流", "year": "2026", "m": "4"}, {"id": "055601", "isbn": "9786264186643", "title": "勝出99%人的零壓力學習法", "cls": "521.1", "author": "粂原圭太郎", "pub": "遠流", "year": "2026", "m": "5"}, {"id": "055602", "isbn": "9786264186711", "title": "SEL社會情緒閱讀素養.1:國語文.連續性文本", "cls": "524.31", "author": "吳昌諭", "pub": "遠流", "year": "2026", "m": "5"}, {"id": "055603", "isbn": "9786264186728", "title": "SEL社會情緒閱讀素養.2:國語文.連續性文本", "cls": "524.31", "author": "吳昌諭", "pub": "遠流", "year": "2026", "m": "5"}, {"id": "055604", "isbn": "9786264185097", "title": "青年的四個大夢:跨世代英雄之旅珍藏版", "cls": "173.2", "author": "吳靜吉", "pub": "遠流", "year": "2026", "m": "1"}, {"id": "055605", "isbn": "9786267454596", "title": "食農教育教案手冊. 國小篇", "cls": "523.39", "author": "林如萍", "pub": "農業部", "year": "2024", "m": "5"}, {"id": "055606", "isbn": "9786267100660", "title": "食農教育教學知能手冊", "cls": "520.933", "author": "林如萍", "pub": "行政院農業委員會", "year": "2019", "m": "5"}, {"id": "055607", "isbn": "9786267368138", "title": "食農教育教案手冊. 國中篇", "cls": "524.39", "author": "林如萍", "pub": "農業部", "year": "2023", "m": "5"}, {"id": "055608", "isbn": "9786267368145", "title": "食農教育教案手冊. 高中篇", "cls": "524.39", "author": "林如萍", "pub": "農業部", "year": "2023", "m": "5"}, {"id": "055609", "isbn": "9789863503385", "title": "「臺灣人的學校」之夢.上:從世界史的視角看日本的臺灣殖民統治", "cls": "520.933", "author": "駒込武", "pub": "臺灣大學出版中心", "year": "2019", "m": "5"}, {"id": "055610", "isbn": "9789863503385", "title": "「臺灣人的學校」之夢.下:從世界史的視角看日本的臺灣殖民統治", "cls": "520.933", "author": "駒込武", "pub": "臺灣大學出版中心", "year": "2019", "m": "5"}];
+
+const CATS = {
+  '0':{name:'總類・工具書', emoji:'📚', c:'#64748b', g1:'#94a3b8', g2:'#475569'},
+  '1':{name:'哲學・心理', emoji:'🧠', c:'#7c3aed', g1:'#8b5cf6', g2:'#6d28d9'},
+  '2':{name:'宗教・信仰', emoji:'🕯️', c:'#d97706', g1:'#f59e0b', g2:'#b45309'},
+  '3':{name:'自然科學', emoji:'🔬', c:'#0d9488', g1:'#14b8a6', g2:'#0f766e'},
+  '4':{name:'應用科學', emoji:'⚙️', c:'#2563eb', g1:'#3b82f6', g2:'#1d4ed8'},
+  '5':{name:'社會科學', emoji:'🌍', c:'#e11d48', g1:'#fb7185', g2:'#be123c'},
+  '6':{name:'中國史地', emoji:'🏯', c:'#c2410c', g1:'#f97316', g2:'#9a3412'},
+  '7':{name:'世界史地', emoji:'🗺️', c:'#0891b2', g1:'#22b8cf', g2:'#0e7490'},
+  '8':{name:'語言文學', emoji:'📖', c:'#db2777', g1:'#ec4899', g2:'#be185d'},
+  '9':{name:'藝術・生活', emoji:'🎨', c:'#4d7c0f', g1:'#84cc16', g2:'#3f6212'},
+};
+const catOf = b => CATS[b.m] || CATS['0'];
+const grad = b => { const c=catOf(b); return `linear-gradient(140deg,${c.g1},${c.g2})`; };
+
+/* ---------------- Sound (Web Audio API) ---------------- */
+let AC=null, soundOn=true;
+function ac(){ if(!AC){ try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){} } return AC; }
+function beep(freq,dur=0.09,type='sine',vol=0.14,slide=0){
+  if(!soundOn) return; const a=ac(); if(!a) return;
+  if(a.state==='suspended') a.resume();
+  const o=a.createOscillator(), g=a.createGain();
+  o.type=type; o.frequency.value=freq;
+  if(slide) o.frequency.exponentialRampToValueAtTime(Math.max(60,freq+slide), a.currentTime+dur);
+  g.gain.setValueAtTime(0.0001,a.currentTime);
+  g.gain.exponentialRampToValueAtTime(vol,a.currentTime+0.012);
+  g.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+dur);
+  o.connect(g); g.connect(a.destination); o.start(); o.stop(a.currentTime+dur+0.02);
+}
+const S={
+  tap:()=>beep(520,0.06,'triangle',0.10),
+  click:()=>beep(660,0.07,'sine',0.12,120),
+  open:()=>{beep(440,0.09,'sine',0.12,180); setTimeout(()=>beep(660,0.10,'sine',0.11),70);},
+  close:()=>beep(330,0.08,'sine',0.10,-90),
+  fav:()=>{beep(700,0.08,'triangle',0.13); setTimeout(()=>beep(950,0.10,'triangle',0.12),80);},
+  unfav:()=>beep(300,0.10,'sine',0.10,-100),
+  random:()=>{[0,80,160,240].forEach((d,i)=>setTimeout(()=>beep(500+i*140,0.09,'square',0.09),d));
+    setTimeout(()=>{beep(880,0.14,'triangle',0.15); beep(1320,0.16,'sine',0.12);},360);},
+  page:()=>beep(600,0.05,'sine',0.08),
+};
+
+/* ---------------- Favorites (persist w/ fallback) ---------------- */
+let favs=new Set();
+try{ const s=localStorage.getItem('ymhs_favs'); if(s) favs=new Set(JSON.parse(s)); }catch(e){}
+function saveFavs(){ try{ localStorage.setItem('ymhs_favs', JSON.stringify([...favs])); }catch(e){} }
+function isFav(id){ return favs.has(id); }
+function toggleFav(id){
+  if(favs.has(id)){ favs.delete(id); S.unfav(); } else { favs.add(id); S.fav(); }
+  saveFavs(); updateFavUI();
+}
+function updateFavUI(){
+  document.getElementById('favCount').textContent = favs.size;
+  document.querySelectorAll('.fav-mini').forEach(el=>{
+    const on=isFav(el.dataset.id); el.classList.toggle('on',on); el.textContent=on?'💛':'🤍';
+  });
+  const mfav=document.querySelector('.btn-fav');
+  if(mfav){ const on=isFav(mfav.dataset.id); mfav.classList.toggle('on',on);
+    mfav.textContent=on?'💛 已在我的書單':'🤍 加入我的書單'; }
+}
+
+/* ---------------- State ---------------- */
+let state={ q:'', cat:'', year:'', sort:'id', favOnly:false };
+let view=[];
+
+/* ---------------- Build controls ---------------- */
+function buildStats(){
+  const years=BOOKS.map(b=>+b.year).filter(Boolean);
+  const pubs=new Set(BOOKS.map(b=>b.pub));
+  const cats=new Set(BOOKS.map(b=>b.m));
+  const news=BOOKS.filter(b=>+b.year>=2026).length;
+  const s=[['📚',BOOKS.length,'新書總數'],['🗂️',cats.size,'分類主題'],['🏢',pubs.size,'出版社'],['🆕',news,'2026 最新']];
+  document.getElementById('stats').innerHTML=s.map(([e,n,l])=>
+    `<div class="stat"><b data-n="${n}">0</b><span>${e} ${l}</span></div>`).join('');
+  document.getElementById('totalFoot').textContent=BOOKS.length;
+  // count up
+  document.querySelectorAll('.stat b').forEach(el=>{
+    const t=+el.dataset.n; let cur=0; const step=Math.max(1,Math.round(t/34));
+    const iv=setInterval(()=>{cur+=step; if(cur>=t){cur=t; clearInterval(iv);} el.textContent=cur;},22);
+  });
+}
+function buildChips(){
+  const counts={}; BOOKS.forEach(b=>counts[b.m]=(counts[b.m]||0)+1);
+  const keys=Object.keys(CATS).filter(k=>counts[k]).sort();
+  let html=`<button class="chip" data-cat="" style="border-color:var(--line)"><span class="dot" style="background:linear-gradient(120deg,var(--brand1),var(--brand2))"></span>全部 <span class="n">${BOOKS.length}</span></button>`;
+  html+=keys.map(k=>{const c=CATS[k];return `<button class="chip" data-cat="${k}"><span class="dot" style="background:${c.c}"></span>${c.emoji} ${c.name} <span class="n">${counts[k]}</span></button>`;}).join('');
+  document.getElementById('chips').innerHTML=html;
+  document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{
+    state.cat=ch.dataset.cat; state.favOnly=false; S.tap(); render();
+  }));
+
+  // distribution bars
+  const max=Math.max(...keys.map(k=>counts[k]));
+  document.getElementById('dist').innerHTML=keys.map(k=>{const c=CATS[k];return `<div class="dbar" data-cat="${k}">
+      <div class="top"><span>${c.emoji} ${c.name}</span><span class="cnt" style="color:${c.c}">${counts[k]}</span></div>
+      <div class="track"><div class="fill" data-w="${counts[k]/max*100}" style="background:linear-gradient(90deg,${c.g1},${c.g2})"></div></div>
+    </div>`;}).join('');
+  document.querySelectorAll('.dbar').forEach(d=>d.addEventListener('click',()=>{
+    state.cat=d.dataset.cat; state.favOnly=false; S.tap(); render();
+    document.querySelector('.meta').scrollIntoView({behavior:'smooth',block:'start'});
+  }));
+  setTimeout(()=>document.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%'),200);
+}
+function buildYears(){
+  const ys=[...new Set(BOOKS.map(b=>b.year))].filter(Boolean).sort((a,b)=>b-a);
+  document.getElementById('yearSel').insertAdjacentHTML('beforeend',
+    ys.map(y=>`<option value="${y}">${y} 年</option>`).join(''));
+}
+
+/* ---------------- Filter + render ---------------- */
+function compute(){
+  const q=state.q.trim().toLowerCase();
+  let arr=BOOKS.filter(b=>{
+    if(state.favOnly && !favs.has(b.id)) return false;
+    if(state.cat && b.m!==state.cat) return false;
+    if(state.year && b.year!==state.year) return false;
+    if(q){
+      const hay=(b.title+' '+b.author+' '+b.pub+' '+b.isbn+' '+b.id+' '+b.cls).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  const s=state.sort;
+  arr.sort((a,b)=>{
+    if(s==='ynew') return (+b.year||0)-(+a.year||0) || a.id.localeCompare(b.id);
+    if(s==='yold') return (+a.year||0)-(+b.year||0) || a.id.localeCompare(b.id);
+    if(s==='title') return a.title.localeCompare(b.title,'zh-Hant');
+    return a.id.localeCompare(b.id);
+  });
+  return arr;
+}
+function bookCard(b,i){
+  const c=catOf(b);
+  const isNew=+b.year>=2026;
+  return `<article class="book" tabindex="0" data-idx="${i}" style="animation-delay:${Math.min(i,20)*22}ms">
+    <div class="cover" style="background:${grad(b)}">
+      ${isNew?'<span class="newbadge">🆕 新書</span>':''}
+      <span class="cat">${c.emoji} ${c.name}</span>
+      <div class="ct">${esc(b.title)}</div>
+    </div>
+    <div class="info">
+      <div class="au">✍️ ${esc(b.author||'—')}</div>
+      <div class="pb">🏢 ${esc(b.pub||'—')}</div>
+      <div class="foot">
+        <div><span class="yr">${b.year||'—'}</span> <span class="rn mono">#${b.id}</span></div>
+        <button class="fav-mini ${isFav(b.id)?'on':''}" data-id="${b.id}" title="加入我的書單">${isFav(b.id)?'💛':'🤍'}</button>
+      </div>
+    </div>
+  </article>`;
+}
+function render(){
+  // sync chip active
+  document.querySelectorAll('.chip').forEach(ch=>{
+    const on = ch.dataset.cat===state.cat && !state.favOnly;
+    ch.classList.toggle('on',on);
+    if(on && ch.dataset.cat){ const c=CATS[ch.dataset.cat]; ch.style.background=c.c; }
+    else ch.style.background='';
+  });
+  view=compute();
+  document.getElementById('resCount').textContent=view.length;
+
+  // active tags
+  const tags=[];
+  if(state.favOnly) tags.push(`<span class="tag-active">💛 我的書單 <button data-clr="fav">✕</button></span>`);
+  if(state.cat) tags.push(`<span class="tag-active">${CATS[state.cat].emoji} ${CATS[state.cat].name} <button data-clr="cat">✕</button></span>`);
+  if(state.year) tags.push(`<span class="tag-active">📅 ${state.year} 年 <button data-clr="year">✕</button></span>`);
+  if(state.q) tags.push(`<span class="tag-active">🔍 「${esc(state.q)}」 <button data-clr="q">✕</button></span>`);
+  const at=document.getElementById('activeTags'); at.innerHTML=tags.join(' ');
+  at.querySelectorAll('[data-clr]').forEach(btn=>btn.addEventListener('click',()=>{
+    const k=btn.dataset.clr; S.tap();
+    if(k==='fav') state.favOnly=false; else if(k==='q'){state.q='';document.getElementById('q').value='';document.getElementById('clearQ').style.display='none';} else state[k]='';
+    if(k==='cat') document.getElementById('yearSel');
+    if(k==='year') document.getElementById('yearSel').value='';
+    render();
+  }));
+
+  const grid=document.getElementById('grid');
+  if(!view.length){
+    grid.innerHTML=`<div class="empty"><div class="big">🔍📭</div><h3>找不到符合的書</h3><p>換個關鍵字，或清除篩選條件再試一次。</p></div>`;
+    return;
+  }
+  grid.innerHTML=view.map((b,i)=>bookCard(b,i)).join('');
+  grid.querySelectorAll('.book').forEach(el=>{
+    el.addEventListener('click',e=>{ if(e.target.closest('.fav-mini')) return; openModal(+el.dataset.idx); });
+    el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault(); openModal(+el.dataset.idx);} });
+  });
+  grid.querySelectorAll('.fav-mini').forEach(el=>el.addEventListener('click',e=>{
+    e.stopPropagation(); toggleFav(el.dataset.id);
+  }));
+}
+const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------------- Modal ---------------- */
+let modalIdx=-1;
+function openModal(idx){
+  modalIdx=idx; const b=view[idx]; if(!b) return; const c=catOf(b);
+  S.open();
+  document.getElementById('modal').innerHTML=`
+    <div class="m-cover" style="background:${grad(b)}">
+      <button class="m-close" id="mClose" title="關閉">✕</button>
+      <span class="cat">${c.emoji} ${c.name}</span>
+      <h2>${esc(b.title)}</h2>
+      <div class="m-au">✍️ ${esc(b.author||'—')}</div>
+    </div>
+    <div class="m-body">
+      <div class="fields">
+        <div class="field"><label>出版社</label><div class="v">${esc(b.pub||'—')}</div></div>
+        <div class="field"><label>出版年</label><div class="v">${b.year||'—'} 年</div></div>
+        <div class="field"><label>分類號</label><div class="v mono">${esc(b.cls||'—')}</div></div>
+        <div class="field"><label>登錄號</label><div class="v mono">${esc(b.id)}</div></div>
+        <div class="field full"><label>ISBN</label><div class="v mono">${esc(b.isbn||'—')}</div></div>
+      </div>
+      <div class="m-actions">
+        <button class="btn-nav" id="prevBtn">← 上一本</button>
+        <button class="btn-fav ${isFav(b.id)?'on':''}" data-id="${b.id}" id="favToggle">${isFav(b.id)?'💛 已在我的書單':'🤍 加入我的書單'}</button>
+        <button class="btn-nav" id="nextBtn">下一本 →</button>
+      </div>
+    </div>`;
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+  document.getElementById('mClose').addEventListener('click',closeModal);
+  document.getElementById('favToggle').addEventListener('click',()=>toggleFav(b.id));
+  document.getElementById('prevBtn').addEventListener('click',()=>nav(-1));
+  document.getElementById('nextBtn').addEventListener('click',()=>nav(1));
+}
+function nav(d){ let n=modalIdx+d; if(n<0)n=view.length-1; if(n>=view.length)n=0; S.page(); openModal(n); }
+function closeModal(){
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow=''; S.close(); modalIdx=-1;
+}
+
+/* ---------------- Random ---------------- */
+function randomPick(){
+  const pool=compute(); if(!pool.length){ toast('目前沒有可推薦的書，換個條件吧！'); return; }
+  S.random();
+  view=pool;
+  let ticks=0; const total=14;
+  const iv=setInterval(()=>{
+    const r=Math.floor(Math.random()*pool.length);
+    highlight(r); ticks++;
+    if(ticks>=total){ clearInterval(iv); const final=Math.floor(Math.random()*pool.length);
+      setTimeout(()=>{ openModal(final); toast('🎉 為你抽到一本書！'); },160); }
+  },70);
+}
+function highlight(i){ /* light feedback via toast pulse only to avoid heavy DOM churn */ }
+
+/* ---------------- Toast ---------------- */
+let toastT;
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2200); }
+
+/* ---------------- Events ---------------- */
+const qInput=document.getElementById('q'), clearQ=document.getElementById('clearQ');
+qInput.addEventListener('input',()=>{ state.q=qInput.value; clearQ.style.display=qInput.value?'grid':'none'; render(); });
+clearQ.addEventListener('click',()=>{ qInput.value=''; state.q=''; clearQ.style.display='none'; qInput.focus(); S.tap(); render(); });
+document.getElementById('yearSel').addEventListener('change',e=>{ state.year=e.target.value; S.tap(); render(); });
+document.getElementById('sortSel').addEventListener('change',e=>{ state.sort=e.target.value; S.tap(); render(); });
+document.getElementById('randomBtn').addEventListener('click',randomPick);
+document.getElementById('favBtn').addEventListener('click',()=>{
+  state.favOnly=!state.favOnly; state.cat=''; S.tap();
+  if(state.favOnly && favs.size===0) toast('你的書單還是空的，先去收藏喜歡的書吧！💛');
+  render(); document.querySelector('.meta').scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('soundBtn').addEventListener('click',e=>{
+  soundOn=!soundOn; e.currentTarget.textContent=soundOn?'🔊':'🔇';
+  if(soundOn){ac(); S.click(); toast('音效已開啟 🔊');} else toast('音效已關閉 🔇');
+});
+document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape' && modalIdx>=0) closeModal();
+  else if(modalIdx>=0 && e.key==='ArrowLeft') nav(-1);
+  else if(modalIdx>=0 && e.key==='ArrowRight') nav(1);
+  else if(e.key==='/' && document.activeElement!==qInput){ e.preventDefault(); qInput.focus(); }
+});
+const toTop=document.getElementById('toTop');
+window.addEventListener('scroll',()=>toTop.classList.toggle('show',window.scrollY>500));
+toTop.addEventListener('click',()=>{ window.scrollTo({top:0,behavior:'smooth'}); S.tap(); });
+
+/* ---------------- Init ---------------- */
+buildStats(); buildChips(); buildYears(); updateFavUI(); render();
+</script>
+</body>
+</html>
